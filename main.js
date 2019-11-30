@@ -1,5 +1,5 @@
 var karte;
-var tileSize = 64;
+var tileSize = 16;
 
 function preload() {
 

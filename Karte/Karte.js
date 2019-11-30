@@ -6,7 +6,7 @@ class Karte {
     this.tiles = this.kartengenerator.generateKarte();
     this.translateX = 0;
     this.translateY = 0;
-    this.zoom = 1;
+    this.zoom = 0.4;
 
   }
 
@@ -22,10 +22,10 @@ class Karte {
   }
 
   keyPressed(key) {
-    if(key == 'W') this.translateY += tileSize/2;
-    if(key == 'S') this.translateY -= tileSize/2;
-    if(key == 'A') this.translateX += tileSize/2;
-    if(key == 'D') this.translateX -= tileSize/2;
+    if(key == 'W') this.translateY += tileSize/2*4;
+    if(key == 'S') this.translateY -= tileSize/2*4;
+    if(key == 'A') this.translateX += tileSize/2*4;
+    if(key == 'D') this.translateX -= tileSize/2*4;
 
     if(key == 'Z') this.zoom += 0.1;
     if(key == 'U') this.zoom -= 0.1;
