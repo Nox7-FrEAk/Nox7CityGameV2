@@ -14,6 +14,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   karte = new Karte();
   lager = new Lager(karte)
+  frameRate(60)
 }
 
 function draw() {
@@ -22,7 +23,7 @@ function draw() {
   translate(karte.getTranslateX(), karte.getTranslateY());
   scale(karte.getZoom());
   karte.show();
-  karte.update(lager.getLager())
+  karte.update(lager)
   lager.update()
   pop();
   lager.show()
@@ -42,7 +43,7 @@ function mouseClicked() {
 }
 
 function keyPressed() {
-karte.keyPressed(key);
+karte.keyPressed(key, lager);
 
 }
 
