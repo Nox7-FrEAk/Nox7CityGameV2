@@ -15,6 +15,7 @@ class AbstractFabrik {
     this.inputRohstoff = null;
     this.outputRohstoff = null;
     this.produktionsrate = produktionsRate;
+    this.lastTick = Date.now()
     this.lager = lager;
     this.einzugsradius = einzugsradius;
     this.maximaleMitarbeiter = maixmalemitarbeiter;
@@ -24,29 +25,31 @@ class AbstractFabrik {
     //arrayliste der spezialisten
   }
 
-  show(x,y, sizeX, sizeY) {
+  show(x, y, sizeX, sizeY) {
     fill(this.c)
-    rect(x,y,sizeX,sizeY)
+    rect(x, y, sizeX, sizeY)
 
 
   }
 
   update() {
+    if (this.produktionsrate + this.lastTick < Date.now()) {
+      this.lastTick = Date.now()
+      if (this.inputRohstoff == null || this.lager.filter(e => e.resource === this.inputRohstoff.resource).length >= this.resourcenFaktor) {
+        if (this.inputRohstoff != null) {
+          var entfernteRohstoffe = 0;
+          for (var i = this.lager.length - 1; i >= 0; i--) {
+            if (this.lager[i].resource === this.inputRohstoff.resource) {
+              this.lager.splice(i, 1);
+              entfernteRohstoffe++
 
-    if (this.inputRohstoff == null || this.lager.filter(e => e.resource === this.inputRohstoff.resource).length >= this.resourcenFaktor) {
-      if (this.inputRohstoff != null) {
-        var entfernteRohstoffe = 0;
-        for (var i = this.lager.length-1; i >= 0; i--) {
-          if (this.lager[i].resource === this.inputRohstoff.resource) {
-            this.lager.splice(i, 1);
-            entfernteRohstoffe++
+              if (entfernteRohstoffe >= this.resourcenFaktor) break;
 
-            if (entfernteRohstoffe >= this.resourcenFaktor) break;
-
+            }
           }
         }
+          this.lager.push(this.outputRohstoff);
       }
-      this.lager.push(this.outputRohstoff);
     }
 
   }
@@ -57,6 +60,9 @@ class AbstractFabrik {
 
   setOutputRohstoff(or) {
     this.outputRohstoff = or;
+  }
+  getLager(){
+    return this.lager
   }
 
 

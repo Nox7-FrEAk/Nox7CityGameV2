@@ -4,6 +4,7 @@ class Karte {
   constructor() {
     this.kartengenerator = new Kartengenerator();
     this.tiles = this.kartengenerator.generateKarte([], 100);
+    this.fabriken = []
 
     this.translateX = 0;
     this.translateY = 0;
@@ -36,7 +37,7 @@ class Karte {
         }
       }
     }
-  
+
 
 
   keyPressed(key) {
@@ -59,12 +60,30 @@ class Karte {
 
   }
 
+  getLager(){
+    var lager = []
+    for (var i = 0; i < this.fabriken.length; i++) {
+      if (this.fabriken[i]) {
+          var cache_lager = this.fabriken[i].getLager()
+          lager.push(cache_lager)
+        }
+      }
+      var test = []
+      for(var i = 0;i<lager.length;i++){
+        for(var j = 0;j<lager[i].length;j++)
+        test.push(lager[i][j])
+
+      }
+  }
+
+
   mousePressed() {
 
   }
 
   addFabrik(fabrik, x, y) {
     var tile = this.kartengenerator.getTile(this.tiles,x, y)
+    this.fabriken.push(fabrik)
     tile.setFabrik(fabrik)
   }
 

@@ -23,8 +23,11 @@ function draw() {
   karte.update()
   pop();
   textSize(17);
+
   fill(0);
   text(round(frameRate()), 1,20);
+
+  karte.getLager();
 
 
 }
