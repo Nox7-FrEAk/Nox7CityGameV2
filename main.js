@@ -1,4 +1,5 @@
 var karte;
+var lager;
 var tileSize = 128;
 
 function preload() {
@@ -12,6 +13,7 @@ function windowResized() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   karte = new Karte();
+  lager = new Lager(karte)
 }
 
 function draw() {
@@ -20,14 +22,13 @@ function draw() {
   translate(karte.getTranslateX(), karte.getTranslateY());
   scale(karte.getZoom());
   karte.show();
-  karte.update()
+  karte.update(lager.getLager())
+  lager.update()
   pop();
+  lager.show()
   textSize(17);
-
   fill(0);
   text(round(frameRate()), 1,20);
-
-  karte.getLager();
 
 
 }

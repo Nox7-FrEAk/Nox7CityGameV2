@@ -30,13 +30,13 @@ class Karte {
     rect(this.tileX * tileSize + tileSize / 2, this.tileY * tileSize + tileSize / 2, tileSize, tileSize)
 
   }
-  update(){
+  update(lager) {
     for (var i = 0; i < this.tiles.length; i++) {
       if (this.tiles[i]) {
-          this.tiles[i].update();
-        }
+        this.tiles[i].update(lager);
       }
     }
+  }
 
 
 
@@ -49,31 +49,30 @@ class Karte {
     if (key == 'Z') this.zoom += 0.3;
     if (key == 'U') this.zoom -= 0.3;
 
-    if (key == '1')     this.addFabrik(new Holzfaeller(), this.tileX, this.tileY)
-    if (key == '2')     this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
-    if (key == '3')    this.addFabrik(new Saegewerk(), this.tileX, this.tileY)
-    if (key == '4')     this.addFabrik(new Steinmetz(), this.tileX, this.tileY)
-    if (key == '5')    this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
-    if (key == '6')    this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
-    if (key == '7')     this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
-    if (key == '8')    this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
+    if (key == '1') this.addFabrik(new Holzfaeller(), this.tileX, this.tileY)
+    if (key == '2') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
+    if (key == '3') this.addFabrik(new Saegewerk(), this.tileX, this.tileY)
+    if (key == '4') this.addFabrik(new Steinmetz(), this.tileX, this.tileY)
+    if (key == '5') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
+    if (key == '6') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
+    if (key == '7') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
+    if (key == '8') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
 
   }
 
-  getLager(){
+  getTileLager() {
     var lager = []
     for (var i = 0; i < this.fabriken.length; i++) {
       if (this.fabriken[i]) {
-          var cache_lager = this.fabriken[i].getLager()
-          lager.push(cache_lager)
+        var cache_lager = this.fabriken[i].getLager()
+        if (cache_lager != null) {
+          for (var j = 0; j < cache_lager.length; j++)
+            lager.push(cache_lager[j])
         }
       }
-      var test = []
-      for(var i = 0;i<lager.length;i++){
-        for(var j = 0;j<lager[i].length;j++)
-        test.push(lager[i][j])
-
-      }
+    }
+    if (lager.length > 0)
+      return lager
   }
 
 
@@ -82,7 +81,7 @@ class Karte {
   }
 
   addFabrik(fabrik, x, y) {
-    var tile = this.kartengenerator.getTile(this.tiles,x, y)
+    var tile = this.kartengenerator.getTile(this.tiles, x, y)
     this.fabriken.push(fabrik)
     tile.setFabrik(fabrik)
   }

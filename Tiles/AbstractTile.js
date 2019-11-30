@@ -24,8 +24,8 @@ class AbstractTile {
 
   }
 
-  update(){
-    if(this.fabrik) this.fabrik.update();
+  update(lager){
+    if(this.fabrik) this.fabrik.update(lager);
   }
 
 

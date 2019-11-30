@@ -32,15 +32,15 @@ class AbstractFabrik {
 
   }
 
-  update() {
+  update(lager) {
     if (this.produktionsrate + this.lastTick < Date.now()) {
       this.lastTick = Date.now()
-      if (this.inputRohstoff == null || this.lager.filter(e => e.resource === this.inputRohstoff.resource).length >= this.resourcenFaktor) {
+      if (this.inputRohstoff == null || lager.filter(e => e.resource === this.inputRohstoff.resource).length >= this.resourcenFaktor) {
         if (this.inputRohstoff != null) {
           var entfernteRohstoffe = 0;
-          for (var i = this.lager.length - 1; i >= 0; i--) {
-            if (this.lager[i].resource === this.inputRohstoff.resource) {
-              this.lager.splice(i, 1);
+          for (var i = lager.length - 1; i >= 0; i--) {
+            if (lager[i].resource === this.inputRohstoff.resource) {
+              lager.splice(i, 1);
               entfernteRohstoffe++
 
               if (entfernteRohstoffe >= this.resourcenFaktor) break;
@@ -62,7 +62,10 @@ class AbstractFabrik {
     this.outputRohstoff = or;
   }
   getLager(){
-    return this.lager
+    var lager = this.lager.slice()
+    this.lager = []
+    if(lager.length == 0) return null
+    else return lager
   }
 
 
