@@ -17,18 +17,20 @@ class AbstractTile {
     rectMode(CENTER);
     noStroke();
     fill(this.farbe)
-    rect(this.x,this.y,this.sizeX,this.sizeY);
-    //fill(0);
-    //text(this.id, this.x,this.y);
+    rect(this.x,this.y,this.sizeX,this.sizeY)
+    if(this.fabrik)
+    this.fabrik.show(this.x, this.y, this.sizeX, this.sizeY)
+
 
   }
 
   update(){
-    if(fabrik) fabrik.update();
+    if(this.fabrik) this.fabrik.update();
   }
 
 
   setFabrik(f) {
+    console.log(f + 'fabrik gesetzt')
     this.fabrik = f;
   }
 

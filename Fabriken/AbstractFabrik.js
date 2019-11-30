@@ -10,7 +10,7 @@ Doku
 
 class AbstractFabrik {
 
-  constructor(level, produktionsRate, lager, einzugsradius, maixmalemitarbeiter) {
+  constructor(level, produktionsRate, lager, einzugsradius, maixmalemitarbeiter, c) {
     this.level = level;
     this.inputRohstoff = null;
     this.outputRohstoff = null;
@@ -19,17 +19,21 @@ class AbstractFabrik {
     this.einzugsradius = einzugsradius;
     this.maximaleMitarbeiter = maixmalemitarbeiter;
     this.resourcenFaktor = 2; //bsp: 1 holz -> 1 brett, wäre ein faktor von 1; 2 holz -> 1 brett, wäre ein faktor von 2
+    this.c = c
     //arrayliste der bewohner
     //arrayliste der spezialisten
   }
 
-  show() {
+  show(x,y, sizeX, sizeY) {
+    fill(this.c)
+    rect(x,y,sizeX,sizeY)
+
 
   }
 
   update() {
 
-    if (this.lager.filter(e => e.resource === this.inputRohstoff.resource).length >= this.resourcenFaktor || this.inputRohstoff == null) {
+    if (this.inputRohstoff == null || this.lager.filter(e => e.resource === this.inputRohstoff.resource).length >= this.resourcenFaktor) {
       if (this.inputRohstoff != null) {
         var entfernteRohstoffe = 0;
         for (var i = this.lager.length-1; i >= 0; i--) {
@@ -43,7 +47,6 @@ class AbstractFabrik {
         }
       }
       this.lager.push(this.outputRohstoff);
-      console.log(this.lager);
     }
 
   }

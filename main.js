@@ -1,5 +1,5 @@
 var karte;
-var tileSize = 16;
+var tileSize = 128;
 
 function preload() {
 
@@ -20,6 +20,7 @@ function draw() {
   translate(karte.getTranslateX(), karte.getTranslateY());
   scale(karte.getZoom());
   karte.show();
+  karte.update()
   pop();
   textSize(17);
   fill(0);
@@ -39,4 +40,8 @@ function mouseClicked() {
 function keyPressed() {
 karte.keyPressed(key);
 
+}
+
+function mousePressed(){
+  karte.mousePressed()
 }
