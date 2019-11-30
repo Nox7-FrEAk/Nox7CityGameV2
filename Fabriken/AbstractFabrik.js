@@ -5,7 +5,7 @@ Doku
  Ticket    Datum       Entwickler  Beschreibung
  --------------------------------------------------------------------------------------------
  #3        28.11.2018 CK           Class Fabrik erstellt
- */
+*/
 
 
 class AbstractFabrik {
@@ -18,6 +18,7 @@ class AbstractFabrik {
     this.lager = lager;
     this.einzugsradius = einzugsradius;
     this.maximaleMitarbeiter = maixmalemitarbeiter;
+    this.resourcenFaktor = 2; //bsp: 1 holz -> 1 brett, wäre ein faktor von 1; 2 holz -> 1 brett, wäre ein faktor von 2
     //arrayliste der bewohner
     //arrayliste der spezialisten
   }
@@ -27,16 +28,22 @@ class AbstractFabrik {
   }
 
   update() {
-    if (this.lager.includes(this.inputRohstoff) || this.inputRohstoff == null) {
+
+    if (this.lager.filter(e => e.resource === this.inputRohstoff.resource).length >= this.resourcenFaktor || this.inputRohstoff == null) {
       if (this.inputRohstoff != null) {
-        for (var i = 0; i < this.lager.length; i++)
+        var entfernteRohstoffe = 0;
+        for (var i = this.lager.length-1; i >= 0; i--) {
           if (this.lager[i].resource === this.inputRohstoff.resource) {
             this.lager.splice(i, 1);
-            break;
+            entfernteRohstoffe++
+
+            if (entfernteRohstoffe >= this.resourcenFaktor) break;
+
           }
+        }
       }
       this.lager.push(this.outputRohstoff);
-      //console.log(this.lager);
+      console.log(this.lager);
     }
 
   }

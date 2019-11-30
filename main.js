@@ -1,9 +1,7 @@
-
-
-
 var sand, wald, wasser;
-var hf;
-function preload(){
+var hf, sw;
+
+function preload() {
 
 }
 
@@ -13,10 +11,11 @@ function windowResized() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  sand = new Sand(1,0);
-  wald = new Wald(1,228);
-  wasser = new Wasser(1,228*2);
+  sand = new Sand(1, 0);
+  wald = new Wald(1, 228);
+  wasser = new Wasser(1, 228 * 2);
   hf = new Holzfaeller();
+  sw = new Saegewerk();
 }
 
 function draw() {
@@ -24,7 +23,8 @@ function draw() {
   sand.show();
   wald.show();
   wasser.show();
-  hf.update();
+  //hf.update();
+  sw.update();
 
 }
 
