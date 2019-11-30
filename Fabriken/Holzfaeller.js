@@ -1,17 +1,16 @@
-class Holzfaeller extends AbstractFabrik{
+class Holzfaeller extends AbstractFabrik {
   //constructor(level, produktionsRate, lager, einzugsradius, maixmalemitarbeiter){
   //constructor(level, produktionsRate, lager, einzugsradius, maixmalemitarbeiter, c) {
 
-  constructor(){
-     super(1, 1000, [], 100, 10, color(12,205,0));
-     super.setOutputRohstoff(new Holz());
+  constructor(tile) {
+    super(1, 1000, [], 100, 10, color(12, 205, 0));
+    if (tile instanceof Wald) this.produktionsrate *= 0.8
+
+    super.setOutputRohstoff(new Holz());
   }
 
-  update(lager){
+  update(lager) {
     super.update(lager);
-
-
   }
-
 
 }

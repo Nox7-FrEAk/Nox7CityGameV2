@@ -1,6 +1,6 @@
 var karte;
 var lager;
-var tileSize = 128;
+var tileSize = 32;
 
 function preload() {
 

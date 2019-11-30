@@ -3,8 +3,8 @@ class Lager {
     this.karte = karte
     this.lager = []
     this.mergedRohstoffe = []
-    for(var i = 0;i<10;i++)this.lager.push(new Holz())
-    for(var i = 0;i<10;i++)this.lager.push(new Stein())
+    for(var i = 0;i<1000;i++)this.lager.push(new Holz())
+    for(var i = 0;i<1000;i++)this.lager.push(new Stein())
 
   }
   show() {

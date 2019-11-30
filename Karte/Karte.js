@@ -48,14 +48,17 @@ class Karte {
     //if(key == 'G') this.tiles = this.kartengenerator.generateKarte(this.tiles, -this.translateX*(1/this.zoom)/5);
     if (key == 'Z') this.zoom += 0.3;
     if (key == 'U') this.zoom -= 0.3;
-
+    var tile = this.kartengenerator.getTile(this.tiles, this.tileX, this.tileY)
+    if(!(tile instanceof Wasser)){
+    console.log(this.tileX, this.tileY, tile)
     if (key == '1')
-      if (lager.remove([new Stein().resource], [10])) this.addFabrik(new Holzfaeller(), this.tileX, this.tileY)
+      if (lager.remove([new Stein().resource], [10])) this.addFabrik(new Holzfaeller(tile), this.tileX, this.tileY)
     if (key == '2')
-        if (lager.remove([new Holz().resource], [10])) this.addFabrik(new Steinmetz(), this.tileX, this.tileY)
+      if (lager.remove([new Holz().resource], [10])) this.addFabrik(new Steinmetz(), this.tileX, this.tileY)
 
     if (key == '3')
-          if (lager.remove([new Holz().resource, new Stein().resource], [10,10])) this.addFabrik(new Saegewerk(), this.tileX, this.tileY)
+      if (lager.remove([new Holz().resource, new Stein().resource], [10, 10])) this.addFabrik(new Saegewerk(), this.tileX, this.tileY)
+    }1111
     /*
     if (key == '3') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
     if (key == '3') this.addFabrik(new Saegewerk(), this.tileX, this.tileY)
@@ -85,6 +88,12 @@ class Karte {
 
 
   mousePressed() {
+    var tile = this.kartengenerator.getTile(this.tiles, this.tileX, this.tileY)
+    if (tile) {
+      var fabrik = tile.getFabrik()
+      if (fabrik)
+        fabrik.setIsSleeping(!fabrik.getIsSleeping())
+    }
 
   }
 

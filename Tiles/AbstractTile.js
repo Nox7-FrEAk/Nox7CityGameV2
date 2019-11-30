@@ -25,7 +25,7 @@ class AbstractTile {
   }
 
   update(lager){
-  
+
     if(this.fabrik) this.fabrik.update(lager);
   }
 
@@ -33,6 +33,9 @@ class AbstractTile {
   setFabrik(f) {
     console.log(f + 'fabrik gesetzt')
     this.fabrik = f;
+  }
+  getFabrik(){
+    return this.fabrik
   }
 
   getX(){
