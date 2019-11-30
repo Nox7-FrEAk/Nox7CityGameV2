@@ -8,9 +8,9 @@ Doku
  */
 
 
-class AbstractFabrik{
+class AbstractFabrik {
 
-  constructor(level, produktionsRate, lager, einzugsradius, maixmalemitarbeiter){
+  constructor(level, produktionsRate, lager, einzugsradius, maixmalemitarbeiter) {
     this.level = level;
     this.inputRohstoff = null;
     this.outputRohstoff = null;
@@ -22,19 +22,30 @@ class AbstractFabrik{
     //arrayliste der spezialisten
   }
 
-   show(){
-    console.log(this.level);
-  }
-
-   update(){
+  show() {
 
   }
 
-  setInputRohstoff(ir){
+  update() {
+    if (this.lager.includes(this.inputRohstoff) || this.inputRohstoff == null) {
+      if (this.inputRohstoff != null) {
+        for (var i = 0; i < this.lager.length; i++)
+          if (this.lager[i].resource === this.inputRohstoff.resource) {
+            this.lager.splice(i, 1);
+            break;
+          }
+      }
+      this.lager.push(this.outputRohstoff);
+      //console.log(this.lager);
+    }
+
+  }
+
+  setInputRohstoff(ir) {
     this.inputRohstoff = ir;
   }
 
-  setOutputRohstoff(or){
+  setOutputRohstoff(or) {
     this.outputRohstoff = or;
   }
 
