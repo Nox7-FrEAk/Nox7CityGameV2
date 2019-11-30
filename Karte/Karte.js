@@ -9,14 +9,12 @@ class Karte {
     this.translateX = 0;
     this.translateY = 0;
     this.zoom = 1;
-    this.tileX = int((mouseX / tileSize) * this.zoom)
-    this.tileY = int((mouseY / tileSize) * this.zoom)
   }
 
   show() {
 
-    this.tileX = int((mouseX / tileSize) * this.zoom)
-    this.tileY = int((mouseY / tileSize) * this.zoom)
+    this.tileX = int(mouseX / (tileSize * this.zoom))
+    this.tileY = int(mouseY / (tileSize * this.zoom))
     for (var i = 0; i < this.tiles.length; i++) {
       if (this.tiles[i]) {
         if (this.tiles[i].getX() + tileSize > -this.translateX * (1 / this.zoom) && this.tiles[i].getX() - tileSize < (windowWidth - this.translateX) * (1 / this.zoom) &&
