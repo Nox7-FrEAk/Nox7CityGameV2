@@ -5,7 +5,6 @@ class Holzfaeller extends AbstractFabrik {
   constructor(tile) {
     super(1, 1000, [], 100, 10, color(12, 205, 0));
     if (tile instanceof Wald) this.produktionsrate *= 0.8
-
     super.setOutputRohstoff(new Holz());
   }
 
