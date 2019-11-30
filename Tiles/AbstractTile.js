@@ -3,8 +3,8 @@ class AbstractTile {
   constructor(x, y, resource, farbe, wertigkeit) {
     this.resource = resource;
     this.wertigkeit = wertigkeit;
-    this.sizeX = 64;
-    this.sizeY = 64;
+    this.sizeX = tileSize;
+    this.sizeY = tileSize;
     this.x = x+this.sizeX/2;
     this.y = y+this.sizeY/2;
     this.farbe = farbe;
@@ -28,4 +28,10 @@ class AbstractTile {
     this.fabrik = f;
   }
 
+  getX(){
+    return this.x;
+  }
+  getY(){
+    return this.y;
+  }
 }

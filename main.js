@@ -1,5 +1,5 @@
-var sand, wald, wasser;
-var hf, sw;
+var karte;
+var tileSize = 64;
 
 function preload() {
 
@@ -11,20 +11,20 @@ function windowResized() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  sand = new Sand(1, 0);
-  wald = new Wald(1, 228);
-  wasser = new Wasser(1, 228 * 2);
-  hf = new Holzfaeller();
-  sw = new Saegewerk();
+  karte = new Karte();
 }
 
 function draw() {
-  //background(255,0,0);
-  sand.show();
-  wald.show();
-  wasser.show();
-  //hf.update();
-  sw.update();
+  background(255,255,230);
+  push();
+  translate(karte.getTranslateX(), karte.getTranslateY());
+  scale(karte.getZoom());
+  karte.show();
+  pop();
+  textSize(17);
+  fill(0);
+  text(round(frameRate()), 1,20);
+
 
 }
 
@@ -33,5 +33,10 @@ function mouseMoved() {
 }
 
 function mouseClicked() {
+
+}
+
+function keyPressed() {
+karte.keyPressed(key);
 
 }
