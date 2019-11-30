@@ -7,8 +7,8 @@ class Holzfaeller extends AbstractFabrik{
      super.setOutputRohstoff(new Holz());
   }
 
-  update(){
-    super.update();
+  update(lager){
+    super.update(lager);
 
 
   }

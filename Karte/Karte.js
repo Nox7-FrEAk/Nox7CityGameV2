@@ -38,7 +38,7 @@ class Karte {
 
 
 
-  keyPressed(key) {
+  keyPressed(key, lager) {
     if (key == 'W') this.translateY += tileSize / 2 * 4;
     if (key == 'S') this.translateY -= tileSize / 2 * 4;
     if (key == 'A') this.translateX += tileSize / 2 * 4;
@@ -47,14 +47,22 @@ class Karte {
     if (key == 'Z') this.zoom += 0.3;
     if (key == 'U') this.zoom -= 0.3;
 
-    if (key == '1') this.addFabrik(new Holzfaeller(), this.tileX, this.tileY)
-    if (key == '2') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
+    if (key == '1')
+      if (lager.remove([new Stein().resource], [10])) this.addFabrik(new Holzfaeller(), this.tileX, this.tileY)
+    if (key == '2')
+        if (lager.remove([new Holz().resource], [10])) this.addFabrik(new Steinmetz(), this.tileX, this.tileY)
+
+    if (key == '3')
+          if (lager.remove([new Holz().resource, new Stein().resource], [10,10])) this.addFabrik(new Saegewerk(), this.tileX, this.tileY)
+    /*
+    if (key == '3') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
     if (key == '3') this.addFabrik(new Saegewerk(), this.tileX, this.tileY)
     if (key == '4') this.addFabrik(new Steinmetz(), this.tileX, this.tileY)
     if (key == '5') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
     if (key == '6') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
     if (key == '7') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
     if (key == '8') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
+    */
 
   }
 
