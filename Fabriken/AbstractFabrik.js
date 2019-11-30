@@ -8,9 +8,11 @@ Doku
 */
 
 
-class AbstractFabrik {
+class AbstractFabrik extends AbstractTile {
 
-  constructor(level, produktionsRate, lager, einzugsradius, maixmalemitarbeiter, c) {
+  constructor(x,y,id,level, produktionsRate, lager, einzugsradius, maixmalemitarbeiter, c) {
+    super(x, y, '', c, 0, id)
+
     this.level = level;
     this.inputRohstoff = null;
     this.outputRohstoff = null;
@@ -18,30 +20,36 @@ class AbstractFabrik {
     this.lastTick = Date.now()
     this.lager = lager;
     this.einzugsradius = einzugsradius;
+    this.produktionsRatenMinderung = 1;
     this.maximaleMitarbeiter = maixmalemitarbeiter;
     this.resourcenFaktor = 2; //bsp: 1 holz -> 1 brett, wäre ein faktor von 1; 2 holz -> 1 brett, wäre ein faktor von 2
-    this.c = c
     this.isSleeping = false
     //arrayliste der bewohner
     //arrayliste der spezialisten
   }
 
-  show(x, y, sizeX, sizeY) {
-    fill(this.c)
-    rect(x, y, sizeX, sizeY)
-
+  show() {
+    super.show()
     if(this.isSleeping){
     fill(0)
-       text('zZzZ', x-sizeX/2,y)
+       text('zZzZ', this.x-this.sizeX/2,this.y)
 
      }
 
 
   }
+  showMouseOver(){
+    noFill()
+    stroke(255,0,0)
+    ellipse(this.x,this.y,this.einzugsradius, this.einzugsradius)
+    noStroke()
+    fill(0)
+    text(this.getProduktionsRate(), this.x, this.y)
+  }
 
   update(lager) {
     if (!this.isSleeping) {
-      if (this.produktionsrate + this.lastTick < Date.now()) {
+      if (this.getProduktionsRate() + this.lastTick < Date.now()) {
         this.lastTick = Date.now()
         if (this.inputRohstoff != null) {
           console.log(this.inputRohstoff)
@@ -77,6 +85,25 @@ class AbstractFabrik {
     if (lager.length == 0) return null
     else return lager
   }
+
+  getEinzugsRadius(){
+    return this.einzugsradius
+  }
+
+  getProduktionsRate(){
+    return this.produktionsrate*this.produktionsRatenMinderung
+  }
+  getProudktionsMinderung(){
+    return this.produktionsRatenMinderung
+  }
+
+
+ setProudktionsMinderung(val){
+   console.log(val)
+
+   this.produktionsRatenMinderung = val
+ }
+
 
 
 }

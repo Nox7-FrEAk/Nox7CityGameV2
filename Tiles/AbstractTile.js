@@ -5,44 +5,36 @@ class AbstractTile {
     this.wertigkeit = wertigkeit;
     this.sizeX = tileSize;
     this.sizeY = tileSize;
-    this.x = x+this.sizeX/2;
-    this.y = y+this.sizeY/2;
+    this.x = x;
+    this.y = y;
     this.id = id;
     this.farbe = farbe;
-    this.fabrik = null;
 
   }
 
-  show(){
+  show() {
     rectMode(CENTER);
     noStroke();
     fill(this.farbe)
-    rect(this.x,this.y,this.sizeX,this.sizeY)
-    if(this.fabrik)
-    this.fabrik.show(this.x, this.y, this.sizeX, this.sizeY)
+    rect(this.x, this.y, this.sizeX, this.sizeY)
 
 
   }
 
-  update(lager){
 
-    if(this.fabrik) this.fabrik.update(lager);
+  update() {
+
   }
 
 
-  setFabrik(f) {
-    console.log(f + 'fabrik gesetzt')
-    this.fabrik = f;
-  }
-  getFabrik(){
-    return this.fabrik
-  }
-
-  getX(){
+  getX() {
     return this.x;
   }
-  getY(){
+  getY() {
     return this.y;
+  }
+  getID(){
+    return this.id;
   }
 
 }

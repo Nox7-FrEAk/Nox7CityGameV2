@@ -13,8 +13,10 @@ class Karte {
 
   show() {
 
-    this.tileX = int((mouseX-this.translateX) / (tileSize * this.zoom))
-    this.tileY = int((mouseY-this.translateY) / (tileSize * this.zoom))
+    this.tileX = int((mouseX - this.translateX) / (tileSize * this.zoom))
+    this.tileY = int((mouseY - this.translateY) / (tileSize * this.zoom))
+    var tile = this.kartengenerator.getTile(this.tiles, this.tileX, this.tileY)
+
     for (var i = 0; i < this.tiles.length; i++) {
       if (this.tiles[i]) {
         if (this.tiles[i].getX() + tileSize > -this.translateX * (1 / this.zoom) && this.tiles[i].getX() - tileSize < (windowWidth - this.translateX) * (1 / this.zoom) &&
@@ -23,9 +25,14 @@ class Karte {
         }
       }
     }
+    if (tile instanceof AbstractFabrik) {
+      tile.showMouseOver();
+
+    }
+
     fill(255, 255, 255, 110)
     rectMode(CENTER)
-    rect(this.tileX * tileSize + tileSize / 2, this.tileY * tileSize + tileSize / 2, tileSize, tileSize)
+    rect(this.tileX * tileSize, this.tileY * tileSize, tileSize, tileSize)
 
   }
   update(lager) {
@@ -34,11 +41,14 @@ class Karte {
         this.tiles[i].update(lager);
       }
     }
+    1
   }
 
 
 
   keyPressed(key, lager) {
+    var tile = this.kartengenerator.getTile(this.tiles, this.tileX, this.tileY)
+
     if (key == 'W') this.translateY += tileSize / 2 * 4;
     if (key == 'S') this.translateY -= tileSize / 2 * 4;
     if (key == 'A') this.translateX += tileSize / 2 * 4;
@@ -46,17 +56,18 @@ class Karte {
     //if(key == 'G') this.tiles = this.kartengenerator.generateKarte(this.tiles, -this.translateX*(1/this.zoom)/5);
     if (key == 'Z') this.zoom += 0.3;
     if (key == 'U') this.zoom -= 0.3;
-    var tile = this.kartengenerator.getTile(this.tiles, this.tileX, this.tileY)
-    if(!(tile instanceof Wasser)){
-    console.log(this.tileX, this.tileY, tile)
-    if (key == '1')
-      if (lager.remove([new Stein().resource], [10])) this.addFabrik(new Holzfaeller(tile), this.tileX, this.tileY)
-    if (key == '2')
-      if (lager.remove([new Holz().resource], [10])) this.addFabrik(new Steinmetz(), this.tileX, this.tileY)
+    if (key == 'R') this.removeFabrik(tile)
 
-    if (key == '3')
-      if (lager.remove([new Holz().resource, new Stein().resource], [10, 10])) this.addFabrik(new Saegewerk(), this.tileX, this.tileY)
-    }1111
+    if (!(tile instanceof Wasser)) {
+      if (key == '1')
+        if (lager.remove([new Stein().resource], [10])) this.addFabrik(new Holzfaeller(tile), tile)
+      if (key == '2')
+        if (lager.remove([new Holz().resource], [10])) this.addFabrik(new Steinmetz(), tile)
+
+      if (key == '3')
+        if (lager.remove([new Holz().resource, new Stein().resource], [10, 10])) this.addFabrik(new Saegewerk(), tile)
+    }
+    1111
     /*
     if (key == '3') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
     if (key == '3') this.addFabrik(new Saegewerk(), this.tileX, this.tileY)
@@ -87,18 +98,48 @@ class Karte {
 
   mousePressed() {
     var tile = this.kartengenerator.getTile(this.tiles, this.tileX, this.tileY)
-    if (tile) {
-      var fabrik = tile.getFabrik()
-      if (fabrik)
-        fabrik.setIsSleeping(!fabrik.getIsSleeping())
+    if (tile instanceof AbstractFabrik) {
+      tile.setIsSleeping(!tile.getIsSleeping())
     }
 
   }
+  removeFabrik(tile) {
+    for (var i = 0; this.fabriken.length; i++) {
+      if (this.fabriken[i] == tile.fabrik) {
+        tile.fabrik = null
+        break
+      }
+    }
 
-  addFabrik(fabrik, x, y) {
-    var tile = this.kartengenerator.getTile(this.tiles, x, y)
+  }
+  addFabrik(fabrik, tile) {
     this.fabriken.push(fabrik)
-    tile.setFabrik(fabrik)
+    for (var i = 0; i < this.tiles.length; i++) {
+      if (this.tiles[i] === tile) {
+        this.tiles.splice(i, 1)
+        console.log('tile entfernt')
+        break
+      }
+    }
+    this.tiles.push(fabrik)
+    for (var i = 0; i < this.fabriken.length; i++) {
+      this.fabriken[i].setProudktionsMinderung(1)
+
+    }
+    for (var i = 0; i < this.fabriken.length; i++) {
+      for (var x = 0; x < this.fabriken.length; x++) {
+        if (this.fabriken[i] != this.fabriken[x]) {
+          var collide = collideCircleCircle(this.fabriken[i].getX(), this.fabriken[i].getY(), this.fabriken[i].getEinzugsRadius(),
+            this.fabriken[x].getX(), this.fabriken[x].getY(), this.fabriken[x].getEinzugsRadius())
+          if (collide) {
+            this.fabriken[i].setProudktionsMinderung(1 + this.fabriken[i].getProudktionsMinderung())
+
+          }
+
+        }
+      }
+    }
+
   }
 
   getTranslateX() {
