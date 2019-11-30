@@ -62,10 +62,10 @@ class Karte {
       if (key == '1')
         if (lager.remove([new Stein().resource], [10])) this.addFabrik(new Holzfaeller(tile), tile)
       if (key == '2')
-        if (lager.remove([new Holz().resource], [10])) this.addFabrik(new Steinmetz(), tile)
+        if (lager.remove([new Holz().resource], [10])) this.addFabrik(new Steinmetz(tile), tile)
 
       if (key == '3')
-        if (lager.remove([new Holz().resource, new Stein().resource], [10, 10])) this.addFabrik(new Saegewerk(), tile)
+        if (lager.remove([new Holz().resource, new Stein().resource], [10, 10])) this.addFabrik(new Saegewerk(tile), tile)
     }
     1111
     /*
