@@ -1,9 +1,8 @@
 var karte;
 var lager;
 var tileSize = 32;
-
+let img
 function preload() {
-
 }
 
 function windowResized() {
