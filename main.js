@@ -10,14 +10,14 @@ function windowResized() {
 }
 
 function setup() {
-  createCanvas(windowWidth-50, windowHeight-50);
+  createCanvas(windowWidth-50, windowHeight-50, P2D);
   karte = new Karte();
   lager = new Lager(karte)
   frameRate(60)
 }
 
 function draw() {
-  background(255,255,230);
+  background(0);
   push();
   translate(karte.getTranslateX(), karte.getTranslateY());
   scale(karte.getZoom());
@@ -27,7 +27,7 @@ function draw() {
   pop();
   lager.show()
   textSize(17);
-  fill(0);
+  fill(255);
   text(round(frameRate()), 1,20);
 
 
