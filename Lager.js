@@ -11,8 +11,8 @@ class Lager {
 
     var i = 2;
     for (var rohstoff in this.mergedRohstoffe) {
-      fill(0)
-      text(rohstoff + ': ' + this.mergedRohstoffe[rohstoff], 1, 20 * i)
+      fill(255)
+      text(rohstoff + ': ' + this.mergedRohstoffe[rohstoff], 100 * i, 19)
       i++
     }
   }
