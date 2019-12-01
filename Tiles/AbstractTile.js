@@ -12,7 +12,7 @@ class AbstractTile {
     this.r = red(farbe)
     this.g = green(farbe)
     this.b = blue(farbe)
-    this.helligkeit = 200
+    this.helligkeit = 255
 
   }
 

@@ -123,6 +123,7 @@ class Karte {
         console.log('tile entfernt')
 
       }
+      /*
       this.tiles[i].setHelligkeit(0)
 
       for (var j = 0; j < this.fabriken.length; j++) {
@@ -132,7 +133,7 @@ class Karte {
         if(this.tiles[i].getHelligkeit() < d)
         this.tiles[i].setHelligkeit(d)
 
-      }
+      }*/
     }
     this.tiles.push(fabrik)
     for (var i = 0; i < this.fabriken.length; i++) {
