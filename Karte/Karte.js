@@ -58,7 +58,7 @@ class Karte {
     if (key == 'U') this.zoom -= 0.3;
     if (key == 'R') this.removeFabrik(tile)
 
-    if (!(tile instanceof Wasser)) {
+    if (!(tile instanceof Wasser) && !(tile instanceof Lava)) {
       if (key == '1')
         if (lager.remove([new Stein().resource], [10])) this.addFabrik(new Holzfaeller(tile), tile)
       if (key == '2')

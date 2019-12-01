@@ -7,6 +7,11 @@ class Kartengenerator {
     this.sandID = 0;
     this.waldID = 1;
     this.wasserID = 2;
+    this.gebirgeID = 3
+    this.schneeID = 4
+    this.lavaID = 5
+    this.regenwaldID = 6
+
     this.maxX = 0;
     this.maxY = 0;
 
@@ -15,50 +20,103 @@ class Kartengenerator {
 
   generateKarte(tiles, bis) {
     var tile;
-    var rnd = this.sandID;
+    var rnd = int(random(0, 7));
     var tiles_cache = []
     var cache_maxX = 0
+    var tilesgesetzt = 0
     for (var x = this.maxX; x < this.maxX + bis; x++) {
-      cache_maxX = x+1;
+      cache_maxX = x + 1;
+
       for (var y = 0; y < 100; y++) {
 
         this.maxY = y;
         if (tiles_cache.length > 10) {
           var tileOben = this.getTileID(tiles_cache, x, y - 1);
-          var tileObenLinks = this.getTileID(tiles_cache,x - 1, y - 1);
-          var tileLinks = this.getTileID(tiles_cache,x - 1, y);
-          var tileLinksUnten = this.getTileID(tiles_cache,x - 1, y + 1);
-          if (tileOben != null && tileObenLinks != null && tileLinks != null && tileLinksUnten != null) {
-            var mittel = int(round((tileOben + tileObenLinks + tileLinks + tileLinksUnten) / 4));
-            if (mittel < 0) mittel = 0;
+          var tileObenLinks = this.getTileID(tiles_cache, x - 1, y - 1);
+          var tileLinks = this.getTileID(tiles_cache, x - 1, y);
+          var tileLinksUnten = this.getTileID(tiles_cache, x - 1, y + 1);
+          var tileLinksUntenUnten = this.getTileID(tiles_cache, x - 1, y + 2);
+          if (tileOben >= 0 && tileObenLinks >= 0 && tileLinks >= 0 && tileLinksUnten >= 0 && tileLinksUntenUnten >= 0) {
+            var mittel = int(round((tileOben + tileObenLinks + tileLinks + tileLinksUnten + tileLinksUntenUnten) / 5));
+            if(mittel <= -1) mittel = 0
             var chance = random(1, 100);
-            if (chance < 25) {
-              chance = random(1, 50);
-              if (rnd == this.wasserID) {
-                if (chance < 1) rnd = this.wasserID;
-                else if (chance < 5) rnd = this.sandID;
-                else if (chance < 10) rnd = this.waldID;
-              }
-              if (rnd == this.sandID) {
-                if (chance < 1) rnd = this.wasserID;
-                else if (chance < 5) rnd = this.sandID;
-                else if (chance < 10) rnd = this.waldID;
-              }
-              if (rnd == this.waldID) {
-                if (chance < 1) rnd = this.wald;
-                else if (chance < 3) rnd = this.wasserID;
-                else if (chance < 5) rnd = this.sandID;
+            tilesgesetzt++
+            if (tilesgesetzt < 4) mittel = rnd
+            if (chance < 20 && tilesgesetzt > 13) {
+              tilesgesetzt = 0
+              chance = random(1, 100);
+              if (mittel == this.wasserID) {
+                if (chance < 1) rnd = this.schneeID;
+                else if (chance < 1.1) rnd = this.lavaID;
+                else if (chance < 2) rnd = this.gebirgeID;
+                else if (chance < 6) rnd = this.sandID;
+                else if (chance < 12) rnd = this.waldID;
 
               }
-            } else rnd = mittel
+              if (mittel == this.sandID) {
+                if (chance < 1) rnd = this.wasserID;
+                else if (chance < 2) rnd = this.waldID;
+                else if (chance < 3) rnd = this.lavaID;
+                else if (chance < 5) rnd = this.schneeID;
+                else if (chance < 8) rnd = this.gebirgeID;
+
+              }
+              if (mittel == this.waldID) {
+                if (chance < 1) rnd = this.schneeID;
+                else if (chance < 1.5) rnd = this.lavaID;
+                else if (chance < 2) rnd = this.gebirgeID;
+                else if (chance < 3) rnd = this.sandID;
+                else if (chance < 4) rnd = this.wasserID;
+                else if (chance < 40) rnd = this.regenwaldID;
+
+              }
+              if (mittel == this.gebirgeID) {
+                if (chance < 1) rnd = this.wasserID;
+                else if (chance < 2) rnd = this.sandID;
+                else if (chance < 3) rnd = this.lavaID;
+                else if (chance < 9) rnd = this.wald;
+                else if (chance < 11) rnd = this.schneeID;
+
+              }
+              if (mittel == this.regenwaldID) {
+                if (chance < 0.2) rnd = this.waldID;
+
+              }
+              if (mittel == this.schneeID) {
+                if (chance < 0.7) rnd = this.wasserID;
+                else if (chance < 2) rnd = this.sandID;
+                else if (chance < 4) rnd = this.wald;
+                else if (chance < 7) rnd = this.gebirgeID;
+
+              }
+
+              if (mittel == this.lavaID) {
+                if (chance < 0.7) rnd = this.wasserID;
+                else if (chance < 1) rnd = this.wald;
+                else if (chance < 5) rnd = this.gebirgeID;
+                else if (chance < 12) rnd = this.sandID;
+
+              }
+            } else  rnd = mittel
+
+
+
           }
         }
         var xPos = x * tileSize;
         var yPos = y * tileSize;
 
+        if(rnd == null) rnd = int(random(0,5))
+
         if (rnd == this.sandID) tile = new Sand(xPos, yPos, [x, y]);
-        if (rnd == this.waldID) tile = new Wald(xPos, yPos, [x, y]);
-        if (rnd == this.wasserID) tile = new Wasser(xPos, yPos, [x, y]);
+        else if (rnd == this.waldID) tile = new Wald(xPos, yPos, [x, y]);
+        else if (rnd == this.wasserID) tile = new Wasser(xPos, yPos, [x, y]);
+        else if (rnd == this.gebirgeID) tile = new Gebrige(xPos, yPos, [x, y]);
+        else if (rnd == this.schneeID) tile = new Schnee(xPos, yPos, [x, y]);
+        else if (rnd == this.lavaID) tile = new Lava(xPos, yPos, [x, y]);
+        else if (rnd == this.regenwaldID) tile = new Regenwald(xPos, yPos, [x, y]);
+
+        else console.log('f45' + rnd)
         tiles_cache.push(tile);
 
       }
@@ -86,7 +144,13 @@ class Kartengenerator {
       if (res == 'wasser') return this.wasserID;
       if (res == 'sand') return this.sandID;
       if (res == 'wald') return this.waldID;
+      if (res == 'gebirge') return this.gebirgeID;
+      if (res == 'schnee') return this.schneeID;
+      if (res == 'lava') return this.lavaID;
+      if (res == 'regenwald') return this.regenwaldID;
+
     }
+    //onsole.log(tiles)
     return -1;
   }
 
