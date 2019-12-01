@@ -6,11 +6,11 @@ function preload() {
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(windowWidth-50, windowHeight-50);
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth-50, windowHeight-50);
   karte = new Karte();
   lager = new Lager(karte)
   frameRate(60)
