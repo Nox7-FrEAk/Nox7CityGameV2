@@ -9,6 +9,7 @@ class Karte {
     this.translateX = 0;
     this.translateY = 0;
     this.zoom = 1;
+    this.selectedTile = null
   }
 
   show() {
@@ -27,7 +28,7 @@ class Karte {
         }
       }
     }
-    if (tile instanceof AbstractFabrik) {
+    if (tile instanceof AbstractTile) {
       tile.showMouseOver();
 
     }
@@ -69,8 +70,11 @@ class Karte {
 
       if (key == '3')
         if (lager.remove([new Holz().resource, new Stein().resource], [10, 10])) this.addFabrik(new Saegewerk(tile), tile)
+
+      if (key == '4')
+        if (lager.remove([new Holz().resource, new Stein().resource], [10, 10])) this.addHaus(new Farmer(tile), tile)
     }
-    1111
+
     /*
     if (key == '3') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
     if (key == '3') this.addFabrik(new Saegewerk(), this.tileX, this.tileY)
@@ -87,10 +91,12 @@ class Karte {
     var lager = []
     for (var i = 0; i < this.fabriken.length; i++) {
       if (this.fabriken[i]) {
-        var cache_lager = this.fabriken[i].getLager()
-        if (cache_lager != null) {
-          for (var j = 0; j < cache_lager.length; j++)
-            lager.push(cache_lager[j])
+        if (this.fabriken[i] instanceof AbstractFabrik) {
+          var cache_lager = this.fabriken[i].getLager()
+          if (cache_lager != null) {
+            for (var j = 0; j < cache_lager.length; j++)
+              lager.push(cache_lager[j])
+          }
         }
       }
     }
@@ -102,8 +108,23 @@ class Karte {
   mousePressed() {
     var tile = this.kartengenerator.getTile(this.tiles, this.tileX, this.tileY)
     if (tile instanceof AbstractFabrik) {
-      tile.setIsSleeping(!tile.getIsSleeping())
+      if (this.selectedTile == null) {
+        tile.setIsSleeping(!tile.getIsSleeping())
+      } else {
+        tile.addMitarbeiter(this.selectedTile.getVerfuegbareBewohner())
+        this.selectedTile.setSelected(false)
+        this.selectedTile = null
+      }
+
+    } else if (tile instanceof AbstractHaus) {
+      tile.setSelected(true)
+      this.selectedTile = tile
     }
+
+    if(!(tile instanceof AbstractHaus)){
+       this.selectedTile.setSelected(false)
+       this.selectedTile = null
+     }
 
   }
   removeFabrik(tile) {
@@ -115,6 +136,30 @@ class Karte {
     }
 
   }
+  addHaus(haus, tile) {
+    this.fabriken.push(haus)
+
+    for (var i = 0; i < this.tiles.length; i++) {
+      if (this.tiles[i] === tile) {
+        this.tiles.splice(i, 1)
+        console.log('tile entfernt')
+
+      }
+      /*
+      this.tiles[i].setHelligkeit(0)
+
+      for (var j = 0; j < this.fabriken.length; j++) {
+        var d = dist(this.fabriken[j].getX(), this.fabriken[j].getY(), this.tiles[i].getX(), this.tiles[i].getY())
+
+        d = map(d, 250, 400, 255, 0)
+        if(this.tiles[i].getHelligkeit() < d)
+        this.tiles[i].setHelligkeit(d)
+
+      }*/
+    }
+    this.tiles.push(haus)
+  }
+
   addFabrik(fabrik, tile) {
     this.fabriken.push(fabrik)
     for (var i = 0; i < this.tiles.length; i++) {
@@ -137,7 +182,8 @@ class Karte {
     }
     this.tiles.push(fabrik)
     for (var i = 0; i < this.fabriken.length; i++) {
-      this.fabriken[i].setProudktionsMinderung(1)
+      if (this.fabriken[i] instanceof AbstractFabrik)
+        this.fabriken[i].setProudktionsMinderung(1)
 
     }
 
@@ -146,13 +192,14 @@ class Karte {
     for (var i = 0; i < this.fabriken.length; i++) {
       for (var x = 0; x < this.fabriken.length; x++) {
         if (this.fabriken[i] != this.fabriken[x]) {
-          var collide = collideCircleCircle(this.fabriken[i].getX(), this.fabriken[i].getY(), this.fabriken[i].getEinzugsRadius(),
-            this.fabriken[x].getX(), this.fabriken[x].getY(), this.fabriken[x].getEinzugsRadius())
-          if (collide) {
-            this.fabriken[i].setProudktionsMinderung(1 + this.fabriken[i].getProudktionsMinderung())
+          if (this.fabriken[i] instanceof AbstractFabrik && this.fabriken[x] instanceof AbstractFabrik) {
+            var collide = collideCircleCircle(this.fabriken[i].getX(), this.fabriken[i].getY(), this.fabriken[i].getEinzugsRadius(),
+              this.fabriken[x].getX(), this.fabriken[x].getY(), this.fabriken[x].getEinzugsRadius())
+            if (collide) {
+              this.fabriken[i].setProudktionsMinderung(1 + this.fabriken[i].getProudktionsMinderung())
 
+            }
           }
-
         }
       }
     }

@@ -29,6 +29,10 @@ class AbstractTile {
     rect(this.x, this.y, this.sizeX, this.sizeY)
   }
 
+  showMouseOver(){
+    
+
+  }
 
   update() {
 
