@@ -1,8 +1,10 @@
 var karte;
 var lager;
 var tileSize = 32;
-let img
+var mainui;
+
 function preload() {
+
 }
 
 function windowResized() {
@@ -10,9 +12,12 @@ function windowResized() {
 }
 
 function setup() {
-  createCanvas(windowWidth-50, windowHeight-50, P2D);
+
+  createCanvas(windowWidth-50, windowHeight-50);
+  mainui = new MainUI();
   karte = new Karte();
-  lager = new Lager(karte)
+  lager = new Lager(karte);
+
   frameRate(60)
 }
 
@@ -25,10 +30,13 @@ function draw() {
   karte.update(lager)
   lager.update()
   pop();
-  lager.show()
+  //lager.show()
   textSize(17);
-  fill(255);
-  text(round(frameRate()), 1,20);
+
+  fill(0);
+  //text(round(frameRate()), 1,20);
+  mainui.show();
+
 
 
 }
