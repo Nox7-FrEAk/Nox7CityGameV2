@@ -9,11 +9,16 @@ class AbstractTile {
     this.y = y
     this.id = id
     this.farbe = farbe
-    this.r = red(farbe)
-    this.g = green(farbe)
-    this.b = blue(farbe)
+    this.r = red(this.farbe)
+    this.g = green(this.farbe)
+    this.b = blue(this.farbe)
+    this.rMax = this.r+10
+    this.rMin = this.r-10
+    this.gMax = this.g+10
+    this.gMin = this.g-10
+    this.bMax = this.b+10
+    this.bMin = this.b-10
     this.helligkeit = 255
-
   }
 
   show() {
@@ -29,6 +34,11 @@ class AbstractTile {
 
   }
 
+  setFarbe(f){
+    this.r = red(this.farbe)
+    this.g = green(this.farbe)
+    this.b = blue(this.farbe)
+  }
 
   getX() {
     return this.x

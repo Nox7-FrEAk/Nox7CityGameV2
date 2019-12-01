@@ -36,17 +36,17 @@ class Lager {
   }
 
   canRemove(resource, x) {
-    return (this.lager.filter(e => e.resource === resource).length >= x)
-  }
-
-  remove(resource, x) {
     var ok = false;
     for (var i = 0; i < resource.length; i++) {
-      ok = this.canRemove(resource[i], x[i])
+      ok = (this.lager.filter(e => e.resource === resource[i]).length >= x[i])
       if (!ok) break
     }
     if (!ok) return false
+    return true
+  }
 
+  remove(resource, x) {
+    if (!this.canRemove(resource, x)) return false
     for (var j = 0; j < resource.length; j++) {
       var entfernteRohstoffe = 0;
       for (var i = this.lager.length - 1; i >= 0; i--) {

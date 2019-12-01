@@ -36,6 +36,15 @@ class AbstractFabrik extends AbstractTile {
 
      }
 
+     if ((this.inputRohstoff == null || lager.canRemove([this.inputRohstoff.resource], [this.resourcenFaktor])) && !this.isSleeping){
+       var per = (this.getProduktionsRate() + this.lastTick - Date.now())/this.getProduktionsRate()
+       fill(255)
+       stroke(0)
+       strokeWeight(1)
+       rect(this.x, this.y-this.sizeY/2+this.sizeY/10, this.sizeX*per, this.sizeY/10)
+     }
+
+
 
   }
   showMouseOver(){
@@ -52,7 +61,6 @@ class AbstractFabrik extends AbstractTile {
       if (this.getProduktionsRate() + this.lastTick < Date.now()) {
         this.lastTick = Date.now()
         if (this.inputRohstoff != null) {
-          console.log(this.inputRohstoff)
           if (lager.remove([this.inputRohstoff.resource], [this.resourcenFaktor]))
             this.lager.push(this.outputRohstoff);
         } else this.lager.push(this.outputRohstoff);

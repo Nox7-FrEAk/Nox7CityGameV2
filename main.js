@@ -2,9 +2,9 @@ var karte;
 var lager;
 var tileSize = 32;
 var mainui;
-
+var wood_stick
 function preload() {
-
+    wood_stick = loadImage('imgs/wood-stick.png');
 }
 
 function windowResized() {
