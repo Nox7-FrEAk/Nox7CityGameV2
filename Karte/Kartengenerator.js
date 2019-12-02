@@ -2,8 +2,7 @@
 class Kartengenerator {
 
   constructor() {
-    //3600 tiles, nicht zu hoch stellen sonst daurt das genrerieren der Map lange
-    this.mapSize = 140;
+
     this.sandID = 0;
     this.waldID = 1;
     this.wasserID = 2;
@@ -12,123 +11,108 @@ class Kartengenerator {
     this.lavaID = 5
     this.regenwaldID = 6
 
-    this.maxX = 0;
-    this.maxY = 0;
-
 
   }
 
   generateKarte(tiles, bis) {
     var tile;
-    var rnd = int(random(0, 7));
     var tiles_cache = []
-    var cache_maxX = 0
-    var tilesgesetzt = 0
-    for (var x = this.maxX; x < this.maxX + bis; x++) {
-      cache_maxX = x + 1;
 
-      for (var y = 0; y < 100; y++) {
+    for (var x = 0; x < bis; x++) {
+      for (var y = 0; y < bis; y++) {
 
-        this.maxY = y;
-        if (tiles_cache.length > 10) {
-          var tileOben = this.getTileID(tiles_cache, x, y - 1);
-          var tileObenLinks = this.getTileID(tiles_cache, x - 1, y - 1);
-          var tileLinks = this.getTileID(tiles_cache, x - 1, y);
-          var tileLinksUnten = this.getTileID(tiles_cache, x - 1, y + 1);
-          var tileLinksUntenUnten = this.getTileID(tiles_cache, x - 1, y + 2);
-          if (tileOben >= 0 && tileObenLinks >= 0 && tileLinks >= 0 && tileLinksUnten >= 0 && tileLinksUntenUnten >= 0) {
-            var mittel = int(round((tileOben + tileObenLinks + tileLinks + tileLinksUnten + tileLinksUntenUnten) / 5));
-            if(mittel <= -1) mittel = 0
-            var chance = random(1, 100);
-            tilesgesetzt++
-            if (tilesgesetzt < 4) mittel = rnd
-            if (chance < 20 && tilesgesetzt > 13) {
-              tilesgesetzt = 0
-              chance = random(1, 100);
-              if (mittel == this.wasserID) {
-                if (chance < 1) rnd = this.schneeID;
-                else if (chance < 1.1) rnd = this.lavaID;
-                else if (chance < 2) rnd = this.gebirgeID;
-                else if (chance < 6) rnd = this.sandID;
-                else if (chance < 12) rnd = this.waldID;
-
-              }
-              if (mittel == this.sandID) {
-                if (chance < 1) rnd = this.wasserID;
-                else if (chance < 2) rnd = this.waldID;
-                else if (chance < 3) rnd = this.lavaID;
-                else if (chance < 5) rnd = this.schneeID;
-                else if (chance < 8) rnd = this.gebirgeID;
-
-              }
-              if (mittel == this.waldID) {
-                if (chance < 1) rnd = this.schneeID;
-                else if (chance < 1.5) rnd = this.lavaID;
-                else if (chance < 2) rnd = this.gebirgeID;
-                else if (chance < 3) rnd = this.sandID;
-                else if (chance < 4) rnd = this.wasserID;
-                else if (chance < 40) rnd = this.regenwaldID;
-
-              }
-              if (mittel == this.gebirgeID) {
-                if (chance < 1) rnd = this.wasserID;
-                else if (chance < 2) rnd = this.sandID;
-                else if (chance < 3) rnd = this.lavaID;
-                else if (chance < 9) rnd = this.wald;
-                else if (chance < 11) rnd = this.schneeID;
-
-              }
-              if (mittel == this.regenwaldID) {
-                if (chance < 0.2) rnd = this.waldID;
-
-              }
-              if (mittel == this.schneeID) {
-                if (chance < 0.7) rnd = this.wasserID;
-                else if (chance < 2) rnd = this.sandID;
-                else if (chance < 4) rnd = this.wald;
-                else if (chance < 7) rnd = this.gebirgeID;
-
-              }
-
-              if (mittel == this.lavaID) {
-                if (chance < 0.7) rnd = this.wasserID;
-                else if (chance < 1) rnd = this.wald;
-                else if (chance < 5) rnd = this.gebirgeID;
-                else if (chance < 12) rnd = this.sandID;
-
-              }
-            } else  rnd = mittel
-
-
-
-          }
-        }
         var xPos = x * tileSize;
         var yPos = y * tileSize;
 
-        if(rnd == null) rnd = int(random(0,5))
-
-        if (rnd == this.sandID) tile = new Sand(xPos, yPos, [x, y]);
-        else if (rnd == this.waldID) tile = new Wald(xPos, yPos, [x, y]);
-        else if (rnd == this.wasserID) tile = new Wasser(xPos, yPos, [x, y]);
-        else if (rnd == this.gebirgeID) tile = new Gebrige(xPos, yPos, [x, y]);
-        else if (rnd == this.schneeID) tile = new Schnee(xPos, yPos, [x, y]);
-        else if (rnd == this.lavaID) tile = new Lava(xPos, yPos, [x, y]);
-        else if (rnd == this.regenwaldID) tile = new Regenwald(xPos, yPos, [x, y]);
-
-        else console.log('f45' + rnd)
+        tile = new Sand(xPos, yPos, [x, y]);
         tiles_cache.push(tile);
 
       }
     }
     tiles.push.apply(tiles, tiles_cache)
+    this.generateWueste(tiles, bis, bis)
     console.log(tiles_cache.length + ' tiles erzeugt');
     console.log(tiles.length + ' gesammttiles ');
-    this.maxX = cache_maxX
+
     return tiles;
   }
 
+  generateWueste(tiles, x, y) {
+    for (var i = 0; i < 60; i++) {
+      var test = this.generateTile(tiles, new Wald(), 0, x, 0, y, random(10, 40), 1)
+      for (var j = 0; j < 2; j++) {
+        var test1 = this.generateTile(tiles, new Wasser(), test[0], test[1], test[2], test[3], random(3, 20), 1)
+        this.generateTile(tiles, new Regenwald(), test1[0], test1[1], test1[2], test1[3], random(3, 8), 1)
+        this.generateTile(tiles, new Sand(), test1[0], test1[1], test1[2], test1[3], random(3, 2), 1)
 
+        //this.generateTile(tiles, new Lava(), test[0], test[1], test[2], test[3], 5, 1)
+      }
+    }
+    for (var i = 0; i < 10; i++) {
+      var test = this.generateTile(tiles, new Gebirge(), 0, x, 0, y, random(10, 20), 1)
+      for (var j = 0; j < 1; j++) {
+        this.generateTile(tiles, new Schnee(), test[0], test[1], test[2], test[3], random(3, 4), 1)
+        this.generateTile(tiles, new Lava(), test[0], test[1], test[2], test[3], random(1, 3), 1)
+      }
+
+      //test = this.generateTile(tiles, new Lava(), test[0], test[1], test[2], test[3], 5, 1)
+    }
+
+
+    /*
+    this.generateTile(tiles, new Wasser(), x, y, 10, 4)
+    this.generateTile(tiles, new Gebirge(), x, y, 40, 3)
+    this.generateTile(tiles, new Lava(), x, y, 12, 3)
+    this.generateTile(tiles, new Schnee(), x, y, 12, 3)
+    this.generateTile(tiles, new Wald(), x, y, 30, 3)
+    this.generateTile(tiles, new Regenwald(), x, y, 30, 3)
+    */
+
+
+
+  }
+
+  generateTile(tiles, tile, xMin, xMax, yMin, yMax, size, anzahl) {
+    var cache_Tiles = []
+    for (var anz = 0; anz < anzahl; anz++) {
+      var rndX = int(random(xMin, xMax))
+      var rndY = int(random(yMin, yMax))
+      for (var i = 0; i < size; i++) {
+        for (var j = 0; j < size; j++)
+          if (rndX + i < xMax && rndY + j < yMax)
+            this.setTile(tiles, tile, rndX + i, rndY + j)
+      }
+    }
+    var maxyrnd = rndY + size > yMax ? yMax : rndY + size
+    var maxxrnd = rndX + size > xMax ? xMax : rndX + size
+
+    return [rndX, maxxrnd, rndY, maxyrnd]
+  }
+
+  getTileIndex(tiles, x, y) {
+
+    for (var i = 0; i < tiles.length; i++) {
+      if (tiles[i].id[0] == x && tiles[i].id[1] == y) return i;
+    }
+
+    return null;
+  }
+  setTile(tiles, tile, x, y) {
+    for (var i = 0; i < tiles.length; i++) {
+      if (tiles[i].id[0] == x && tiles[i].id[1] == y) {
+        if (tile instanceof Wasser) tile = new Wasser(tiles[i].getX(), tiles[i].getY(), tiles[i].getID())
+        if (tile instanceof Gebirge) tile = new Gebirge(tiles[i].getX(), tiles[i].getY(), tiles[i].getID())
+        if (tile instanceof Lava) tile = new Lava(tiles[i].getX(), tiles[i].getY(), tiles[i].getID())
+        if (tile instanceof Regenwald) tile = new Regenwald(tiles[i].getX(), tiles[i].getY(), tiles[i].getID())
+        if (tile instanceof Sand) tile = new Sand(tiles[i].getX(), tiles[i].getY(), tiles[i].getID())
+        if (tile instanceof Schnee) tile = new Schnee(tiles[i].getX(), tiles[i].getY(), tiles[i].getID())
+        if (tile instanceof Wald) tile = new Wald(tiles[i].getX(), tiles[i].getY(), tiles[i].getID())
+
+        tiles[i] = tile
+        break
+      }
+    }
+  }
   getTile(tiles, x, y) {
 
     for (var i = 0; i < tiles.length; i++) {

@@ -121,10 +121,12 @@ class Karte {
       this.selectedTile = tile
     }
 
-    if(!(tile instanceof AbstractHaus)){
-       this.selectedTile.setSelected(false)
-       this.selectedTile = null
-     }
+    if (!(tile instanceof AbstractHaus)) {
+      if (this.selectedTile != null) {
+        this.selectedTile.setSelected(false)
+        this.selectedTile = null
+      }
+    }
 
   }
   removeFabrik(tile) {
