@@ -74,7 +74,7 @@ class Kartengenerator {
                 if (chance < 1) rnd = this.wasserID;
                 else if (chance < 2) rnd = this.sandID;
                 else if (chance < 3) rnd = this.lavaID;
-                else if (chance < 9) rnd = this.wald;
+                else if (chance < 9) rnd = this.waldID;
                 else if (chance < 11) rnd = this.schneeID;
 
               }
@@ -85,14 +85,14 @@ class Kartengenerator {
               if (mittel == this.schneeID) {
                 if (chance < 0.7) rnd = this.wasserID;
                 else if (chance < 2) rnd = this.sandID;
-                else if (chance < 4) rnd = this.wald;
+                else if (chance < 4) rnd = this.waldID;
                 else if (chance < 7) rnd = this.gebirgeID;
 
               }
 
               if (mittel == this.lavaID) {
                 if (chance < 0.7) rnd = this.wasserID;
-                else if (chance < 1) rnd = this.wald;
+                else if (chance < 1) rnd = this.waldID;
                 else if (chance < 5) rnd = this.gebirgeID;
                 else if (chance < 12) rnd = this.sandID;
 
@@ -106,7 +106,6 @@ class Kartengenerator {
         var xPos = x * tileSize;
         var yPos = y * tileSize;
 
-        if(rnd == null) rnd = int(random(0,5))
 
         if (rnd == this.sandID) tile = new Sand(xPos, yPos, [x, y]);
         else if (rnd == this.waldID) tile = new Wald(xPos, yPos, [x, y]);
