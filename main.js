@@ -2,19 +2,22 @@ var karte;
 var lager;
 var tileSize = 32;
 var mainui;
+var bauui;
 var wood_stick
+
 function preload() {
-    wood_stick = loadImage('imgs/wood-stick.png');
+  wood_stick = loadImage('imgs/wood-stick.png');
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth-50, windowHeight-50);
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 function setup() {
 
-  createCanvas(windowWidth-50, windowHeight-50);
+  createCanvas(windowWidth - 20, windowHeight - 20);
   mainui = new MainUI();
+  bauui = new BauUI();
   karte = new Karte();
   lager = new Lager(karte);
 
@@ -36,6 +39,7 @@ function draw() {
   fill(0);
   //text(round(frameRate()), 1,20);
   mainui.show();
+  bauui.show();
 
 
 
@@ -50,10 +54,10 @@ function mouseClicked() {
 }
 
 function keyPressed() {
-karte.keyPressed(key, lager);
+  karte.keyPressed(key, lager);
 
 }
 
-function mousePressed(){
+function mousePressed() {
   karte.mousePressed()
 }
