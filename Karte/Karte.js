@@ -59,7 +59,7 @@ class Karte {
     if (key == 'D') this.translateX -= tileSize / 2 * 4;
     //if(key == 'G') this.tiles = this.kartengenerator.generateKarte(this.tiles, -this.translateX*(1/this.zoom)/5);
     if (key == 'Z' && this.zoom <= 2) this.zoom += 0.3;
-    if (key == 'U' && this.zoom >= 0.1) this.zoom -= 0.3;
+    if (key == 'U' && this.zoom >= 0.4) this.zoom -= 0.3;
     if (key == 'R') this.removeFabrik(tile)
 
     if (!(tile instanceof Wasser) && !(tile instanceof Lava)) {
@@ -121,10 +121,10 @@ class Karte {
       this.selectedTile = tile
     }
 
-    if(!(tile instanceof AbstractHaus)){
-       this.selectedTile.setSelected(false)
-       this.selectedTile = null
-     }
+    if (!(tile instanceof AbstractHaus)) {
+      this.selectedTile.setSelected(false)
+      this.selectedTile = null
+    }
 
   }
   removeFabrik(tile) {
