@@ -1,5 +1,5 @@
 
-class Gebrige extends AbstractTile{
+class Gebirge extends AbstractTile{
   //constructor(x, y, sizeX, sizeY, resource, farbe, wertigkeit) {
 
   constructor(x,y, id){

@@ -122,8 +122,15 @@ class Karte {
     }
 
     if (!(tile instanceof AbstractHaus)) {
+<<<<<<< HEAD
       this.selectedTile.setSelected(false)
       this.selectedTile = null
+=======
+      if (this.selectedTile != null) {
+        this.selectedTile.setSelected(false)
+        this.selectedTile = null
+      }
+>>>>>>> #18_KARTENGENERATOR_V2
     }
 
   }

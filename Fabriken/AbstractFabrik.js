@@ -88,7 +88,6 @@ class AbstractFabrik extends AbstractTile {
     return this.isSleeping
   }
   setIsSleeping(isSleeping){
-    console.log(isSleeping)
     this.isSleeping = isSleeping
   }
 
