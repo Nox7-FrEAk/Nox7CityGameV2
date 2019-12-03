@@ -2,15 +2,23 @@
 class Kartengenerator {
 
   constructor() {
-    //3600 tiles, nicht zu hoch stellen sonst daurt das genrerieren der Map lange
-    this.mapSize = 140;
-    this.sandID = 0;
-    this.waldID = 1;
-    this.wasserID = 2;
-    this.gebirgeID = 3
-    this.schneeID = 4
+
+    this.sandID = [0,1]
+    this.waldID = [2,3]
+    this.regenwaldID = [4]
+    this.wasserID = [5]
+    this.lavaID = [6]
+    this.gebirgeID = [7,8]
+    this.schneeID = [9]
+
+
+
+    /*
+    this.wasserID = 3
+    this.gebirgeID =4
     this.lavaID = 5
-    this.regenwaldID = 6
+    this.schneeID = 6
+    this.regenwaldID = 7*/
 
 
 
@@ -25,11 +33,20 @@ class Kartengenerator {
         for (var y = 0; y < 100; y++) {
           var xPos = x * tileSize;
           var yPos = y * tileSize;
-          var noiseVal = noise(xPos, yPos)
-          noiseVal = int(map(noiseVal, 0,1,0,6))
-          console.log(noiseVal)
+          var noiseVal = noise(xPos*0.001, yPos*0.001)
 
-          tiles_cache.push(new Sand(xPos, yPos, [x, y]));
+          noiseVal = int(map(noiseVal, 0,1,0,10))
+
+          if (this.sandID.includes(noiseVal)) tile = new Sand(xPos, yPos, [x, y]);
+          else if (this.waldID.includes(noiseVal)) tile = new Wald(xPos, yPos, [x, y]);
+          else if (this.wasserID.includes(noiseVal)) tile = new Wasser(xPos, yPos, [x, y]);
+          else if (this.regenwaldID.includes(noiseVal)) tile = new Regenwald(xPos, yPos, [x, y]);
+          else if (this.gebirgeID.includes(noiseVal)) tile = new Gebrige(xPos, yPos, [x, y]);
+          else if (this.schneeID.includes(noiseVal)) tile = new Schnee(xPos, yPos, [x, y]);
+          else if (this.lavaID.includes(noiseVal))tile = new Lava(xPos, yPos, [x, y]);
+
+
+          tiles_cache.push(tile);
 
 
         }
