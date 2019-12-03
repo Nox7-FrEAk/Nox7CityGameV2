@@ -26,7 +26,9 @@ class Kartengenerator {
           var xPos = x * tileSize;
           var yPos = y * tileSize;
           var noiseVal = noise(xPos, yPos)
+          noiseVal = int(map(noiseVal, 0,1,0,6))
           console.log(noiseVal)
+
           tiles_cache.push(new Sand(xPos, yPos, [x, y]));
 
 
