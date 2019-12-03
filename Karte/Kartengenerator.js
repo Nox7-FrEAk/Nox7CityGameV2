@@ -41,7 +41,7 @@ class Kartengenerator {
           else if (this.waldID.includes(noiseVal)) tile = new Wald(xPos, yPos, [x, y]);
           else if (this.wasserID.includes(noiseVal)) tile = new Wasser(xPos, yPos, [x, y]);
           else if (this.regenwaldID.includes(noiseVal)) tile = new Regenwald(xPos, yPos, [x, y]);
-          else if (this.gebirgeID.includes(noiseVal)) tile = new Gebrige(xPos, yPos, [x, y]);
+          else if (this.gebirgeID.includes(noiseVal)) tile = new Gebirge(xPos, yPos, [x, y]);
           else if (this.schneeID.includes(noiseVal)) tile = new Schnee(xPos, yPos, [x, y]);
           else if (this.lavaID.includes(noiseVal))tile = new Lava(xPos, yPos, [x, y]);
 
