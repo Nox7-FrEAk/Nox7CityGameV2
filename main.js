@@ -3,10 +3,13 @@ var lager;
 var tileSize = 32;
 var mainui;
 var bauui;
-var wood_stick
+var geui;
+var wood_stick;
 
 function preload() {
   wood_stick = loadImage('imgs/wood-stick.png');
+  forrest = loadImage('Tiles/TileImage/Forrest.png');
+  ocean = loadImage('Tiles/TileImage/Ocean.png');
 }
 
 function windowResized() {
@@ -18,7 +21,8 @@ function setup() {
   createCanvas(windowWidth - 20, windowHeight - 20);
   mainui = new MainUI();
   bauui = new BauUI();
-  karte = new Karte();
+  geui = new GebUI();
+  karte = new Karte(geui);
   lager = new Lager(karte);
 
   frameRate(60)
@@ -33,6 +37,7 @@ function draw() {
   karte.update(lager)
   lager.update()
   pop();
+
   //lager.show()
   textSize(17);
 
@@ -40,6 +45,7 @@ function draw() {
   //text(round(frameRate()), 1,20);
   mainui.show();
   bauui.show();
+  geui.show();
 
 
 
