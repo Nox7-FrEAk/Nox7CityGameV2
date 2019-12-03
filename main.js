@@ -3,7 +3,8 @@ var lager;
 var tileSize = 32;
 var mainui;
 var bauui;
-var wood_stick
+var geui
+var wood_stick;
 
 function preload() {
   wood_stick = loadImage('imgs/wood-stick.png');
@@ -16,6 +17,7 @@ function windowResized() {
 function setup() {
 
   createCanvas(windowWidth - 20, windowHeight - 20);
+  geui = new GebaudeUI();
   mainui = new MainUI();
   bauui = new BauUI();
   karte = new Karte();
@@ -40,6 +42,7 @@ function draw() {
   //text(round(frameRate()), 1,20);
   mainui.show();
   bauui.show();
+  geui.show();
 
 
 

@@ -64,7 +64,7 @@ class Karte {
 
     if (!(tile instanceof Wasser) && !(tile instanceof Lava)) {
       if (key == '1')
-        if (lager.remove([new Stein().resource], [10])) this.addFabrik(new Holzfaeller(tile), tile)
+        if (lager.remove([new Stein().resource], [10])) this.addFabrik(new 4(tile), tile)
       if (key == '2')
         if (lager.remove([new Holz().resource], [10])) this.addFabrik(new Steinmetz(tile), tile)
 
