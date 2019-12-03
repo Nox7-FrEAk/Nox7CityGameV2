@@ -35,6 +35,7 @@ class Karte {
 
     fill(255, 255, 255, 110)
     rectMode(CENTER)
+    stroke(0)
     rect(this.tileX * tileSize, this.tileY * tileSize, tileSize, tileSize)
 
   }
