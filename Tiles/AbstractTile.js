@@ -24,13 +24,22 @@ class AbstractTile {
 
   show() {
     rectMode(CENTER)
+    imageMode(CENTER)
     noStroke()
     //fill(red(this.farbe), green(this.farbe), blue(this.farbe),this.helligkeit)
-    if (this.tileImage != null) image(this.tileImage,this.x-tileSize/2,this.y-tileSize/2, tileSize, tileSize)
-    else {
+    if (this.tileImage != null){
+
+       image(this.tileImage,this.x,this.y, this.sizeX, this.sizeY)
+       fill(0,0,0, 255-this.helligkeit)
+       rect(this.x, this.y, this.sizeX, this.sizeY)
+
+     }
+     else{
+
       fill(this.r, this.g, this.b, this.helligkeit)
       rect(this.x, this.y, this.sizeX, this.sizeY)
     }
+
   }
 
   showMouseOver(){
@@ -58,6 +67,7 @@ class AbstractTile {
     return this.id
   }
   setHelligkeit(helligkeit){
+    console.log(helligkeit)
     if(helligkeit > 255) this.helligkeit = 255
     else this.helligkeit = helligkeit
   }

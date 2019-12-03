@@ -14,8 +14,8 @@ class Karte {
 
   show() {
 
-    this.tileX = int((mouseX - this.translateX) / (tileSize * this.zoom))
-    this.tileY = int((mouseY - this.translateY) / (tileSize * this.zoom))
+    this.tileX = int((mouseX - this.translateX +tileSize/2) / (tileSize * this.zoom))
+    this.tileY = int((mouseY - this.translateY + tileSize/2) / (tileSize * this.zoom))
     var tile = this.kartengenerator.getTile(this.tiles, this.tileX, this.tileY)
 
     for (var i = 0; i < this.tiles.length; i++) {
@@ -169,10 +169,11 @@ class Karte {
     for (var i = 0; i < this.tiles.length; i++) {
       if (this.tiles[i] === tile) {
         this.tiles.splice(i, 1)
+        this.tiles.push(fabrik)
         console.log('tile entfernt')
 
       }
-      /*
+/*
       this.tiles[i].setHelligkeit(0)
 
       for (var j = 0; j < this.fabriken.length; j++) {
@@ -182,9 +183,10 @@ class Karte {
         if(this.tiles[i].getHelligkeit() < d)
         this.tiles[i].setHelligkeit(d)
 
-      }*/
+      }
+      */
     }
-    this.tiles.push(fabrik)
+
     for (var i = 0; i < this.fabriken.length; i++) {
       if (this.fabriken[i] instanceof AbstractFabrik)
         this.fabriken[i].setProudktionsMinderung(1)
