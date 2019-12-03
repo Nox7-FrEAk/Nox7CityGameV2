@@ -9,7 +9,7 @@ var wood_stick;
 function preload() {
   wood_stick = loadImage('imgs/wood-stick.png');
   forrest = loadImage('Tiles/TileImage/Forrest.png');
-  ocean = loadImage('Tiles/TileImage/Ocean.png');
+  ocean = loadImage('Tiles/TileImage/Ocean2.png');
 }
 
 function windowResized() {
