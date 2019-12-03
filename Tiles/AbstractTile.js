@@ -1,6 +1,6 @@
 class AbstractTile {
 
-  constructor(x, y, resource, farbe, wertigkeit, id) {
+  constructor(x, y, resource, farbe, wertigkeit, id, tileImage) {
     this.resource = resource
     this.wertigkeit = wertigkeit
     this.sizeX = tileSize
@@ -19,18 +19,22 @@ class AbstractTile {
     this.bMax = this.b+10
     this.bMin = this.b-10
     this.helligkeit = 255
+    this.tileImage = tileImage
   }
 
   show() {
     rectMode(CENTER)
     noStroke()
     //fill(red(this.farbe), green(this.farbe), blue(this.farbe),this.helligkeit)
-    fill(this.r, this.g, this.b, this.helligkeit)
-    rect(this.x, this.y, this.sizeX, this.sizeY)
+    if (this.tileImage != null) image(this.tileImage,this.x-tileSize/2,this.y-tileSize/2, tileSize, tileSize)
+    else {
+      fill(this.r, this.g, this.b, this.helligkeit)
+      rect(this.x, this.y, this.sizeX, this.sizeY)
+    }
   }
 
   showMouseOver(){
-    
+
 
   }
 
