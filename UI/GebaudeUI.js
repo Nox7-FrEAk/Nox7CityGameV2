@@ -7,13 +7,26 @@ class GebUI {
 
 
   show() {
+    //Variablen
+    var recthight = 250; //Rechteck Höhe
+    var rectwidth = 200; //Rechteck Beirte
+    var recty = (windowHeight / 2) - (recthight / 2); //Position rechteck in Y
+    var rectx = windowWidth - rectwidth - 21; //Position Rechteck in X
+    var textheight = 17 // Text Grösse
+
+    //Code
     if (this.showingTile != null) {
       if (this.showingTile instanceof Farmer) {
+        fill(60);
+        stroke(255);
+        rect(rectx, recty, rectwidth, recthight);
+        noStroke();
         fill(255)
-        textSize(17)
-        noStroke()
-        text('Anzahl Bewohner: ' + this.showingTile.anzahlbewohner, 10, 100)
-        text('Arbeitende Bewohner: ' + this.showingTile.arbeitendebewohner, 10, 117)
+        textSize(textheight)
+        text('Anzahl Bewohner: ', rectx + 5, recty + 25)
+        text(this.showingTile.anzahlbewohner, rectx + 5, recty + 25 + textheight)
+        text('Arbeitende Bewohner: ', rectx + 5, recty + 25 + (textheight * 2))
+        text(this.showingTile.arbeitendebewohner, rectx + 5, recty + 25 + (textheight * 3))
 
       }
     }
