@@ -1,8 +1,5 @@
 class MainUI {
 
-  constructor(Lager) {
-
-  }
   setup() {
     var lager;
     lager = new Lager(karte);
@@ -18,6 +15,6 @@ class MainUI {
     textSize(17);
     noStroke();
     text("FPS: " + round(frameRate()), 5, textHeight);
-    lager.show();
+    lager.show(karte);
   }
 }

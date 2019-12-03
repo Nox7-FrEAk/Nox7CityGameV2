@@ -14,8 +14,8 @@ class Karte {
 
   show() {
 
-    this.tileX = int((mouseX - this.translateX +tileSize/2) / (tileSize * this.zoom))
-    this.tileY = int((mouseY - this.translateY + tileSize/2) / (tileSize * this.zoom))
+    this.tileX = int((mouseX - this.translateX + tileSize / 2) / (tileSize * this.zoom))
+    this.tileY = int((mouseY - this.translateY + tileSize / 2) / (tileSize * this.zoom))
     var tile = this.kartengenerator.getTile(this.tiles, this.tileX, this.tileY)
 
     for (var i = 0; i < this.tiles.length; i++) {
@@ -74,7 +74,11 @@ class Karte {
 
       if (key == '4')
         if (lager.remove([new Holz().resource, new Stein().resource], [10, 10])) this.addHaus(new Farmer(tile), tile)
+
+      if (key == '5')
+        if (lager.remove([new Holz().resource, new Stein().resource], [5, 5])) this.addHaus(new Fischer(tile), tile)
     }
+    5
 
     /*
     if (key == '3') this.addFabrik(new Kohlewerk(), this.tileX, this.tileY)
@@ -174,18 +178,18 @@ class Karte {
         console.log('tile entfernt')
 
       }
-/*
-      this.tiles[i].setHelligkeit(0)
+      /*
+            this.tiles[i].setHelligkeit(0)
 
-      for (var j = 0; j < this.fabriken.length; j++) {
-        var d = dist(this.fabriken[j].getX(), this.fabriken[j].getY(), this.tiles[i].getX(), this.tiles[i].getY())
+            for (var j = 0; j < this.fabriken.length; j++) {
+              var d = dist(this.fabriken[j].getX(), this.fabriken[j].getY(), this.tiles[i].getX(), this.tiles[i].getY())
 
-        d = map(d, 250, 400, 255, 0)
-        if(this.tiles[i].getHelligkeit() < d)
-        this.tiles[i].setHelligkeit(d)
+              d = map(d, 250, 400, 255, 0)
+              if(this.tiles[i].getHelligkeit() < d)
+              this.tiles[i].setHelligkeit(d)
 
-      }
-      */
+            }
+            */
     }
 
     for (var i = 0; i < this.fabriken.length; i++) {
