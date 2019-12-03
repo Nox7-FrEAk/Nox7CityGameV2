@@ -1,10 +1,11 @@
 //S/CK/#7_Wold-Generator
 class Karte {
 
-  constructor() {
+  constructor(geui) {
     this.kartengenerator = new Kartengenerator();
     this.tiles = this.kartengenerator.generateKarte([], 100);
     this.fabriken = []
+    this.geui = geui
 
     this.translateX = 0;
     this.translateY = 0;
@@ -119,6 +120,7 @@ class Karte {
     } else if (tile instanceof AbstractHaus) {
       tile.setSelected(true)
       this.selectedTile = tile
+      geui.setshowingTile(tile)
     }
 
     if (!(tile instanceof AbstractHaus)) {

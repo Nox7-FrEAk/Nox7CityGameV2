@@ -1,12 +1,27 @@
-class GebaudeUI {
+class GebUI {
+
+  constructor() {
+    this.showingTile = null
+
+  }
+
 
   show() {
+    if (this.showingTile != null) {
+      if (this.showingTile instanceof Farmer) {
+        fill(255)
+        textSize(17)
+        noStroke()
+        text('Anzahl Bewohner: ' + this.showingTile.anzahlbewohner, 10, 100)
+        text('Arbeitende Bewohner: ' + this.showingTile.arbeitendebewohner, 10, 117)
 
-    var abstracthaus;
-
-    abstracthaus = new AbstractHaus();
-
-    if (abstracthaus.selected == true) {
-      rect(windowWidth / 2, windowHeight / 2, 50, 50)
+      }
     }
+
   }
+
+  setshowingTile(tile) {
+    this.showingTile = tile
+
+  }
+}

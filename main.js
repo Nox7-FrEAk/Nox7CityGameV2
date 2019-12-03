@@ -3,7 +3,7 @@ var lager;
 var tileSize = 32;
 var mainui;
 var bauui;
-var geui
+var geui;
 var wood_stick;
 
 function preload() {
@@ -17,10 +17,10 @@ function windowResized() {
 function setup() {
 
   createCanvas(windowWidth - 20, windowHeight - 20);
-  geui = new GebaudeUI();
   mainui = new MainUI();
   bauui = new BauUI();
-  karte = new Karte();
+  geui = new GebUI();
+  karte = new Karte(geui);
   lager = new Lager(karte);
 
   frameRate(60)
@@ -35,6 +35,7 @@ function draw() {
   karte.update(lager)
   lager.update()
   pop();
+
   //lager.show()
   textSize(17);
 

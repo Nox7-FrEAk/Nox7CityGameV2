@@ -14,7 +14,8 @@ class AbstractHaus extends AbstractTile {
     if (this.selected) {
       strokeWeight(3)
       stroke(0)
-    } else noStroke()
+    } else
+      noStroke()
     fill(this.r, this.g, this.b, this.helligkeit)
     rect(this.x, this.y, this.sizeX, this.sizeY)
 
