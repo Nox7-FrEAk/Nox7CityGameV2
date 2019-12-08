@@ -10,8 +10,8 @@ Doku
 
 class AbstractFabrik extends AbstractTile {
 
-  constructor(x,y,id,level, produktionsRate, lager, einzugsradius, maixmaleMitarbeiter, c) {
-    super(x, y, '', c, 0, id)
+  constructor(x,y,id,level, produktionsRate, lager, einzugsradius, maixmaleMitarbeiter, c,tileImage) {
+    super(x, y, '', c, 0, id, tileImage)
 
     this.level = level;
     this.inputRohstoff = null;

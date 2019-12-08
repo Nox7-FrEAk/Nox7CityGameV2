@@ -4,12 +4,13 @@ class Kartengenerator {
   constructor() {
 
     this.sandID = [0,1]
-    this.waldID = [2,3]
+    this.waldID = [2]
     this.regenwaldID = [4]
     this.wasserID = [5]
     this.lavaID = [6]
     this.gebirgeID = [7,8]
     this.schneeID = [9]
+    this.wieseID = [3]
 
 
 
@@ -44,6 +45,7 @@ class Kartengenerator {
           else if (this.gebirgeID.includes(noiseVal)) tile = new Gebirge(xPos, yPos, [x, y]);
           else if (this.schneeID.includes(noiseVal)) tile = new Schnee(xPos, yPos, [x, y]);
           else if (this.lavaID.includes(noiseVal))tile = new Lava(xPos, yPos, [x, y]);
+          else if (this.wieseID.includes(noiseVal))tile = new Wiese(xPos, yPos, [x,y]);
 
 
           tiles_cache.push(tile);
@@ -77,6 +79,7 @@ class Kartengenerator {
             if (res == 'schnee') return this.schneeID;
             if (res == 'lava') return this.lavaID;
             if (res == 'regenwald') return this.regenwaldID;
+            if (res == 'wiese') return this.wieseID;
 
           }
           //onsole.log(tiles)
