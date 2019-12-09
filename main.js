@@ -13,6 +13,8 @@ function preload() {
   wiese1 = loadImage('Tiles/TileImage/Wiese1.png');
   wiese2 = loadImage('Tiles/TileImage/Wiese2.png');
   holzfaeller = loadImage('Tiles/TileImage/Holzfäller.png');
+  sand = loadImage('Tiles/TileImage/Sand1.png');
+  berg = loadImage('Tiles/TileImage/Berg.png');
 
 
 }
