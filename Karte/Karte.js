@@ -73,7 +73,7 @@ class Karte {
         if (lager.remove([new Holz().resource, new Stein().resource], [10, 10])) this.addFabrik(new Saegewerk(tile), tile)
 
       if (key == '4')
-        if (lager.remove([new Holz().resource, new Stein().resource], [10, 10])) this.addHaus(new Farmer(tile), tile)
+        if (lager.remove([new Holz().resource], [10])) this.addHaus(new Farmer(tile), tile)
 
     }
     if (tile instanceof Wasser){
@@ -189,7 +189,7 @@ class Karte {
         this.tiles[i].setHelligkeit(d)
 
       }
-      
+
     }
 
     for (var i = 0; i < this.fabriken.length; i++) {
