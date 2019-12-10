@@ -74,6 +74,11 @@ class Karte {
 
       if (key == '4')
         if (lager.remove([new Holz().resource, new Stein().resource], [10, 10])) this.addHaus(new Farmer(tile), tile)
+
+    }
+    if (tile instanceof Wasser){
+      if (key == '5')
+        if (lager.remove([new Holz().resource],[10])) this.addFabrik(new Fischer(tile), tile)
     }
 
     /*

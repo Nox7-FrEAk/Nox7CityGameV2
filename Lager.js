@@ -3,22 +3,29 @@ class Lager {
     this.karte = karte
     this.lager = []
     this.mergedRohstoffe = []
-    for (var i = 0; i < 1000; i++) this.lager.push(new Holz())
-    for (var i = 0; i < 1000; i++) this.lager.push(new Stein())
+    for (var i = 0; i < 40; i++) this.lager.push(new Holz())
+    for (var i = 0; i < 30; i++) this.lager.push(new Stein())
+    for (var i = 0; i < 30; i++) this.lager.push(new Fisch())
 
   }
   show() {
 
-    var i = 2;
+    var twGes = 0
+    var tW = 0
     for (var rohstoff in this.mergedRohstoffe) {
       fill(255)
-      text(rohstoff + ': ' + this.mergedRohstoffe[rohstoff], 100 * i, 19)
-      i++
+      tW = textWidth(rohstoff + ': ' + this.mergedRohstoffe[rohstoff] + " | ")
+      text(rohstoff + ': ' + this.mergedRohstoffe[rohstoff] + " | ", 100 + tW + twGes, 19)
+      twGes += tW + 5
     }
-    text('Arbeitende Bewohner: ' + this.getArbeitendeBewohner(), 100 * 5, 19)
-    text('Bewohner gesamt: ' + this.getBewohner(), 100 * 7, 19)
-
-
+    var cache = 'Arbeitende Bewohner: ' + this.getArbeitendeBewohner()
+    tW = textWidth(cache)
+    text(cache, 100 + tW + twGes, 19)
+    twGes += tW + 100
+    cache = 'Bewohner gesamt: ' + this.getBewohner()
+    tW = textWidth(cache)
+    text(cache, 100 + tW + twGes, 19)
+    twGes += tW + 5
 
   }
   update() {
@@ -45,7 +52,7 @@ class Lager {
         if (this.karte.fabriken[i].getLastHungerTick() + this.karte.fabriken[i].getHungerTick() < Date.now()) {
           this.karte.fabriken[i].setLastHungerTick(Date.now())
           var nb = this.karte.fabriken[i].getNahrungsbedarf()
-          for (var i = 0;i<nb.length;i++) {
+          for (var i = 0; i < nb.length; i++) {
             if (this.canRemove([nb[i].resource], [1])) {
               this.remove([nb[i].resource], [1])
             }
