@@ -5,13 +5,13 @@ var mainui;
 var bauui;
 var geui;
 var wood_stick;
-
+var wiesen_pics = []
 function preload() {
   wood_stick = loadImage('imgs/wood-stick.png');
   forrest = loadImage('Tiles/TileImage/Forrest.png');
   ocean = loadImage('Tiles/TileImage/Ocean2.png');
-  wiese1 = loadImage('Tiles/TileImage/Wiese1.png');
-  wiese2 = loadImage('Tiles/TileImage/Wiese2.png');
+  wiesen_pics.push(loadImage('Tiles/TileImage/Wiese1.png'));
+  wiesen_pics.push(loadImage('Tiles/TileImage/Wiese2.png'));
   holzfaeller = loadImage('Tiles/TileImage/Holzfäller.png');
   sand = loadImage('Tiles/TileImage/Sand1.png');
   berg = loadImage('Tiles/TileImage/Berg.png');

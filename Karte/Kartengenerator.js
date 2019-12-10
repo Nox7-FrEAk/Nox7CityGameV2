@@ -3,14 +3,16 @@ class Kartengenerator {
 
   constructor() {
 
-    this.sandID = [0,1]
-    this.waldID = [2]
-    this.regenwaldID = [4]
-    this.wasserID = [5]
-    this.lavaID = [6]
-    this.gebirgeID = [7,8]
-    this.schneeID = [9]
-    this.wieseID = [3]
+
+    this.wieseID = [0,5]
+    this.sandID = [1]
+    this.waldID = [2,4]
+    this.regenwaldID = [3]
+
+    this.wasserID = [6,9]
+    this.gebirgeID = [7,10,12]
+    this.lavaID = [8]
+    this.schneeID = [11]
 
 
 
@@ -34,9 +36,9 @@ class Kartengenerator {
         for (var y = 0; y < 100; y++) {
           var xPos = x * tileSize;
           var yPos = y * tileSize;
-          var noiseVal = noise(xPos*0.001, yPos*0.001)
+          var noiseVal = noise(xPos*0.0007, yPos*0.0007)
 
-          noiseVal = int(map(noiseVal, 0,1,0,10))
+          noiseVal = int(map(noiseVal, 0,1,0,13))
 
           if (this.sandID.includes(noiseVal)) tile = new Sand(xPos, yPos, [x, y]);
           else if (this.waldID.includes(noiseVal)) tile = new Wald(xPos, yPos, [x, y]);
