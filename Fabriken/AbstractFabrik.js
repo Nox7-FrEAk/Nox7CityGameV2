@@ -118,6 +118,13 @@ class AbstractFabrik extends AbstractTile {
    this.mitarbeiter += val
    if(this.mitarbeiter > this.maximaleMitarbeiter) this.mitarbeiter = this.maximaleMitarbeiter
  }
+ getMitarbeiter(){
+   return this.mitarbeiter
+ }
+
+ getMaxMitarbeiter(){
+   return this.maximaleMitarbeiter
+ }
 
 
 

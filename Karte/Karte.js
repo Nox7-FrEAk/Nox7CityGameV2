@@ -108,13 +108,11 @@ class Karte {
 
   mousePressed() {
     var tile = this.kartengenerator.getTile(this.tiles, this.tileX, this.tileY)
+    this.selectedTile = tile
+    /*
     if (tile instanceof AbstractFabrik) {
       if (this.selectedTile == null) {
         tile.setIsSleeping(!tile.getIsSleeping())
-      } else {
-        tile.addMitarbeiter(this.selectedTile.getVerfuegbareBewohner())
-        this.selectedTile.setSelected(false)
-        this.selectedTile = null
       }
 
     } else if (tile instanceof AbstractHaus) {
@@ -130,6 +128,7 @@ class Karte {
       }
 
     }
+    */
 
   }
   removeFabrik(tile) {

@@ -1,12 +1,14 @@
 //S/MB/#8_CLASS_Haus
 class AbstractHaus extends AbstractTile {
 
-  constructor(x, y, id, anzahlbewohner, nahrungsbedarf, rohstoffbedarf, farbe) {
+  constructor(x, y, id, anzahlbewohner, nahrungsbedarf,hungerTick, rohstoffbedarf, farbe) {
     super(x, y, '', farbe, 0, id)
-    this.anzahlbewohner = anzahlbewohner;
+    this.anzahlbewohner = anzahlbewohner
+    this.hungerTick = hungerTick
     this.arbeitendebewohner = 0
-    this.nahrungsbedarf = nahrungsbedarf;
-    this.rohstoffbedarf = rohstoffbedarf;
+    this.nahrungsbedarf = nahrungsbedarf
+    this.rohstoffbedarf = rohstoffbedarf
+    this.lastHungerTick = Date.now()
     this.selected = false
   }
 
@@ -34,11 +36,31 @@ class AbstractHaus extends AbstractTile {
     this.selected = val
   }
 
-  getVerfuegbareBewohner() {
-    var cache = this.anzahlbewohner - this.arbeitendebewohner
-    this.arbeitendebewohner = cache
-    console.log(cache)
-    return cache
+  getBewohner() {
+    return this.anzahlbewohner
+  }
+
+  getArbeitendeBewohner(){
+    return this.arbeitendebewohner
+  }
+  setArbeitendeBewohner(){
+    this.arbeitendebewohner++
+  }
+
+  getHungerTick(){
+    return this.hungerTick
+  }
+
+  getLastHungerTick(){
+    return this.lastHungerTick
+  }
+
+  setLastHungerTick(val){
+    this.lastHungerTick = val
+  }
+
+  getNahrungsbedarf(){
+    return this.nahrungsbedarf
   }
 }
 //E/MB/#8_CLASS_Haus
