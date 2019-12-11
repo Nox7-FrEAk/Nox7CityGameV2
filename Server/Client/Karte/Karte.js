@@ -3,13 +3,25 @@ class Karte {
 
   constructor() {
     this.kartengenerator = new Kartengenerator();
-    this.tiles = this.kartengenerator.generateKarte([], 100);
+    this.tiles = null
     this.fabriken = []
 
     this.translateX = 0;
     this.translateY = 0;
     this.zoom = 1;
-    this.selectedTile = null
+    this.selectedTile = null;
+
+    var self = this;
+
+    socket.on("map", function(map){
+      if(!map){
+        console.log("this:", this);
+          console.log("self:", self);
+        self.tiles = self.kartengenerator.generateKarte([], 100);
+      }
+      console.log(map);
+    });
+    socket.emit("getMap","");
   }
 
   show() {
@@ -17,7 +29,6 @@ class Karte {
     this.tileX = int((mouseX - this.translateX +tileSize/2) / (tileSize * this.zoom))
     this.tileY = int((mouseY - this.translateY + tileSize/2) / (tileSize * this.zoom))
     var tile = this.kartengenerator.getTile(this.tiles, this.tileX, this.tileY)
-
     for (var i = 0; i < this.tiles.length; i++) {
       if (this.tiles[i]) {
         if (this.tiles[i].getX() + tileSize > -this.translateX * (1 / this.zoom) && this.tiles[i].getX() - tileSize < (windowWidth - this.translateX) * (1 / this.zoom) &&

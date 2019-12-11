@@ -31,11 +31,13 @@ function setup() {
 function draw() {
   background(0);
   push();
-  translate(karte.getTranslateX(), karte.getTranslateY());
-  scale(karte.getZoom());
-  karte.show();
-  karte.update(lager)
-  lager.update()
+  if(karte.tiles){
+    translate(karte.getTranslateX(), karte.getTranslateY());
+    scale(karte.getZoom());
+    karte.show();
+    karte.update(lager)
+    lager.update()
+  }
   pop();
 
   //lager.show()
