@@ -7,3 +7,7 @@ class Farmer extends AbstractHaus {
 
   }
 }
+
+Farmer.kosten = {};
+Farmer.kosten[new Holz().resource] = 10;
+Farmer.kosten[new Stein().resource] = 10;

@@ -10,10 +10,10 @@ Doku
 
 class AbstractFabrik extends AbstractTile {
 
-  constructor(x,y,id,level, produktionsRate, lager, einzugsradius, maixmaleMitarbeiter, c) {
+  constructor(name, x,y,id,level, produktionsRate, lager, einzugsradius, maixmaleMitarbeiter, c) {
     super(x, y, '', c, 0, id)
-
     this.level = level;
+    this.name = name
     this.inputRohstoff = null;
     this.outputRohstoff = null;
     this.produktionsrate = produktionsRate;
@@ -37,7 +37,7 @@ class AbstractFabrik extends AbstractTile {
 
      }
 
-     if ((this.inputRohstoff == null || lager.canRemove([this.inputRohstoff.resource], [this.resourcenFaktor])) && !this.isSleeping){
+     if ((this.inputRohstoff == null || lager.canRemove(this.inputRohstoff)) && !this.isSleeping){
        var per = (this.getProduktionsRate() + this.lastTick - Date.now())/this.getProduktionsRate()
        fill(255)
        stroke(0)
@@ -66,10 +66,16 @@ class AbstractFabrik extends AbstractTile {
       if (this.getProduktionsRate() + this.lastTick < Date.now()) {
         this.lastTick = Date.now()
         if (this.inputRohstoff != null) {
-          if (lager.remove([this.inputRohstoff.resource], [this.resourcenFaktor]))
-            this.lager.push(this.outputRohstoff);
-        } else this.lager.push(this.outputRohstoff);
-
+          if (lager.remove(this.inputRohstoff)){
+            for(var r in this.outputRohstoff){
+              this.lager[r] = (this.lager[r] || 0) + this.outputRohstoff[r];
+            }
+          }
+        } else{
+          for(var r in this.outputRohstoff){
+            this.lager[r] = (this.lager[r] || 0) + this.outputRohstoff[r];
+          }
+        }
       }
     }
   }
@@ -92,9 +98,9 @@ class AbstractFabrik extends AbstractTile {
   }
 
   getLager() {
-    var lager = this.lager.slice()
-    this.lager = []
-    if (lager.length == 0) return null
+    var lager = this.lager;
+    this.lager = {}
+    if (Object.keys(lager).length == 0) return null
     else return lager
   }
 

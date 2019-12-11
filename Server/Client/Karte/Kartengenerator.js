@@ -27,34 +27,67 @@ class Kartengenerator {
   generateKarte(tiles, bis) {
     var tile;
     var tiles_cache = []
-    var tilesgesetzt = 0
-    for (var x = 0; x < bis; x++) {
+    var tilesgesetzt = 0;
+    if (tiles.length == 0) {
+      for (var x = 0; x < bis; x++) {
 
-      for (var y = 0; y < 100; y++) {
-        var xPos = x * tileSize;
-        var yPos = y * tileSize;
-        var noiseVal = noise(xPos * 0.001, yPos * 0.001)
+        for (var y = 0; y < 100; y++) {
+          var xPos = x * tileSize;
+          var yPos = y * tileSize;
+          var noiseVal = noise(xPos * 0.001, yPos * 0.001)
 
-        noiseVal = int(map(noiseVal, 0, 1, 0, 10))
+          noiseVal = int(map(noiseVal, 0, 1, 0, 10))
 
-        if (this.sandID.includes(noiseVal)) tile = new Sand(xPos, yPos, [x, y]);
-        else if (this.waldID.includes(noiseVal)) tile = new Wald(xPos, yPos, [x, y]);
-        else if (this.wasserID.includes(noiseVal)) tile = new Wasser(xPos, yPos, [x, y]);
-        else if (this.regenwaldID.includes(noiseVal)) tile = new Regenwald(xPos, yPos, [x, y]);
-        else if (this.gebirgeID.includes(noiseVal)) tile = new Gebirge(xPos, yPos, [x, y]);
-        else if (this.schneeID.includes(noiseVal)) tile = new Schnee(xPos, yPos, [x, y]);
-        else if (this.lavaID.includes(noiseVal)) tile = new Lava(xPos, yPos, [x, y]);
-
-
-        tiles_cache.push(tile);
+          if (this.sandID.includes(noiseVal)) tile = new Sand(xPos, yPos, [x, y]);
+          else if (this.waldID.includes(noiseVal)) tile = new Wald(xPos, yPos, [x, y]);
+          else if (this.wasserID.includes(noiseVal)) tile = new Wasser(xPos, yPos, [x, y]);
+          else if (this.regenwaldID.includes(noiseVal)) tile = new Regenwald(xPos, yPos, [x, y]);
+          else if (this.gebirgeID.includes(noiseVal)) tile = new Gebirge(xPos, yPos, [x, y]);
+          else if (this.schneeID.includes(noiseVal)) tile = new Schnee(xPos, yPos, [x, y]);
+          else if (this.lavaID.includes(noiseVal)) tile = new Lava(xPos, yPos, [x, y]);
 
 
+          tiles_cache.push(tile);
+
+
+        }
       }
+      let upload = [];
+      for(let tile of tiles_cache){
+        upload.push({
+          x: tile.x,
+          y: tile.y,
+          id: tile.id,
+          resource: tile.resource
+        })
+      }
+      tiles.push.apply(tiles, tiles_cache)
+      socket.emit('setMap', upload);
+      console.log(tiles_cache.length + ' tiles erzeugt');
+
+    } else {
+      for (var t of tiles) {
+        if (t.resource == new Sand().resource) {
+          tiles_cache.push(new Sand(t.x, t.y, t.id))
+        } else if (t.resource == new Wald().resource) {
+          tiles_cache.push(new Wald(t.x, t.y, t.id))
+        } else if (t.resource == new Wasser().resource) {
+          tiles_cache.push(new Wasser(t.x, t.y, t.id))
+        } else if (t.resource == new Regenwald().resource) {
+          tiles_cache.push(new Regenwald(t.x, t.y, t.id))
+        } else if (t.resource == new Gebirge().resource) {
+          tiles_cache.push(new Gebirge(t.x, t.y, t.id))
+        } else if (t.resource == new Schnee().resource) {
+          tiles_cache.push(new Schnee(t.x, t.y, t.id))
+        } else if (t.resource == new Lava().resource) {
+          tiles_cache.push(new Lava(t.x, t.y, t.id))
+        }
+      }
+      tiles = tiles_cache
+
     }
-    tiles.push.apply(tiles, tiles_cache)
-    console.log(tiles_cache.length + ' tiles erzeugt');
     console.log(tiles.length + ' gesammttiles ');
-    socket.emit('setMap', tiles);
+
     return tiles;
   }
 

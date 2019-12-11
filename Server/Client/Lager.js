@@ -1,64 +1,66 @@
 class Lager {
   constructor(karte) {
     this.karte = karte
-    this.lager = []
-    this.mergedRohstoffe = []
-    for(var i = 0;i<1000;i++)this.lager.push(new Holz())
-    for(var i = 0;i<1000;i++)this.lager.push(new Stein())
+    var self = this;
+    socket.on("lager",function(lager){
+      if(lager){
+        self.lager = lager;
+      }else{
+        self.lager = {};
+        self.lager[new Holz().resource] = 1000;
+        self.lager[new Stein().resource] = 1000;
+        socket.emit('setLager', self.lager)
+      }
+
+    })
+    socket.emit("getLager");
+
+    socket.on("lagerChange", function(lager){
+      self.lager = lager;
+    })
+
+    //for(var i = 0;i<1000;i++)this.lager.push(new Holz())
+    //for(var i = 0;i<1000;i++)this.lager.push(new Stein())
 
   }
   show() {
 
     var i = 2;
-    for (var rohstoff in this.mergedRohstoffe) {
+    for (var rohstoff in this.lager) {
       fill(255)
-      text(rohstoff + ': ' + this.mergedRohstoffe[rohstoff], 100 * i, 19)
+      text(rohstoff + ': ' + this.lager[rohstoff], 100 * i, 19)
       i++
     }
   }
+
   update() {
-    var lager = this.karte.getTileLager()
+    let lager = this.karte.getTileLager()
 
     if (lager) {
-      for (var i = 0; i < lager.length; i++)
-        this.lager.push(lager[i])
+      socket.emit("add", lager);
     }
-    this.mergedRohstoffe = []
-    for (var i = 0; i < this.lager.length; i++) {
-      if (this.mergedRohstoffe[this.lager[i].resource] == null) this.mergedRohstoffe[this.lager[i].resource] = 1
-      else this.mergedRohstoffe[this.lager[i].resource] += 1
-    }
-
   }
 
   getLager() {
     return this.lager
   }
 
-  canRemove(resource, x) {
-    var ok = false;
-    for (var i = 0; i < resource.length; i++) {
-      ok = (this.lager.filter(e => e.resource === resource[i]).length >= x[i])
-      if (!ok) break
+  canRemove(resource) {
+    var ok = true;
+    for (var i in resource) {
+      ok = ok && this.lager[i] >= resource[i];
     }
-    if (!ok) return false
-    return true
+    return ok;
   }
 
-  remove(resource, x) {
-    if (!this.canRemove(resource, x)) return false
-    for (var j = 0; j < resource.length; j++) {
-      var entfernteRohstoffe = 0;
-      for (var i = this.lager.length - 1; i >= 0; i--) {
-        if (this.lager[i].resource == resource[j]) {
-          this.lager.splice(i, 1);
-          entfernteRohstoffe++
-          if (entfernteRohstoffe >= x[j]) break
-
-        }
-
+  remove(resource) {
+    if (this.canRemove(resource)) {
+      socket.emit("remove", resource)
+      for (var i in resource) {
+        this.lager[i] -= resource[i];
       }
-    }
       return true
+    }
+    return false;
   }
 }
