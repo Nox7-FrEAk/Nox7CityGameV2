@@ -1,15 +1,15 @@
 var karte;
 var lager;
-var tileSize = 32;
+var tileSize = 64;
 var mainui;
 var bauui;
 var geui;
 var wood_stick;
 
 function preload() {
-  wood_stick = loadImage('imgs/wood-stick.png');
-  forrest = loadImage('Tiles/TileImage/Forrest.png');
-  ocean = loadImage('Tiles/TileImage/Ocean2.png');
+  wood_stick = null
+  forrest = null
+  ocean = null
 }
 
 function windowResized() {
@@ -24,7 +24,6 @@ function setup() {
   geui = new GebUI();
   karte = new Karte(geui);
   lager = new Lager(karte);
-
   frameRate(60)
 }
 

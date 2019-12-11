@@ -62,5 +62,9 @@ class AbstractHaus extends AbstractTile {
   getNahrungsbedarf(){
     return this.nahrungsbedarf
   }
+
+  canLevelUp(){
+    return true
+  }
 }
 //E/MB/#8_CLASS_Haus

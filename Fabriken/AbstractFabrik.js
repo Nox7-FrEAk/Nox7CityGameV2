@@ -23,7 +23,6 @@ class AbstractFabrik extends AbstractTile {
     this.produktionsRatenMinderung = 1;
     this.mitarbeiter = 0
     this.maximaleMitarbeiter = maixmaleMitarbeiter;
-    this.resourcenFaktor = 2; //bsp: 1 holz -> 1 brett, wäre ein faktor von 1; 2 holz -> 1 brett, wäre ein faktor von 2
     this.isSleeping = false
     //arrayliste der bewohner
     //arrayliste der spezialisten
@@ -37,7 +36,7 @@ class AbstractFabrik extends AbstractTile {
 
      }
 
-     if ((this.inputRohstoff == null || lager.canRemove([this.inputRohstoff.resource], [this.resourcenFaktor])) && !this.isSleeping){
+     if ((this.inputRohstoff == null || lager.canRemove(this.inputRohstoff)) && !this.isSleeping){
        var per = (this.getProduktionsRate() + this.lastTick - Date.now())/this.getProduktionsRate()
        fill(255)
        stroke(0)
@@ -66,7 +65,7 @@ class AbstractFabrik extends AbstractTile {
       if (this.getProduktionsRate() + this.lastTick < Date.now()) {
         this.lastTick = Date.now()
         if (this.inputRohstoff != null) {
-          if (lager.remove([this.inputRohstoff.resource], [this.resourcenFaktor]))
+          if (lager.remove(this.inputRohstoff))
             this.lager.push(this.outputRohstoff);
         } else this.lager.push(this.outputRohstoff);
 

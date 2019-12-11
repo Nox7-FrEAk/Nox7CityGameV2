@@ -65,20 +65,23 @@ class Karte {
 
     if (!(tile instanceof Wasser) && !(tile instanceof Lava)) {
       if (key == '1')
-        if (lager.remove([new Stein().resource], [10])) this.addFabrik(new Holzfaeller(tile), tile)
+        if (lager.remove(Holzfaeller.kosten)) this.addFabrik(new Holzfaeller(tile), tile)
       if (key == '2')
-        if (lager.remove([new Holz().resource], [10])) this.addFabrik(new Steinmetz(tile), tile)
+        if (lager.remove(Steinmetz.kosten)) this.addFabrik(new Steinmetz(tile), tile)
 
       if (key == '3')
-        if (lager.remove([new Holz().resource, new Stein().resource], [10, 10])) this.addFabrik(new Saegewerk(tile), tile)
+        if (lager.remove(Saegewerk.kosten)) this.addFabrik(new Saegewerk(tile), tile)
 
       if (key == '4')
-        if (lager.remove([new Holz().resource], [10])) this.addHaus(new Farmer(tile), tile)
+        if (lager.remove(Farmer.kosten)) this.addHaus(new Farmer(tile), tile)
+
+      if (key == '6')
+          if (lager.remove(Traubenfarm.kosten)) this.addFabrik(new Traubenfarm(tile), tile)
 
     }
     if (tile instanceof Wasser){
       if (key == '5')
-        if (lager.remove([new Holz().resource],[10])) this.addFabrik(new Fischer(tile), tile)
+        if (lager.remove(Fischer.kosten)) this.addFabrik(new Fischer(tile), tile)
     }
 
     /*
@@ -101,10 +104,13 @@ class Karte {
           var cache_lager = this.fabriken[i].getLager()
           if (cache_lager != null) {
             for (var j = 0; j < cache_lager.length; j++)
-              lager.push(cache_lager[j])
+              for(let r of cache_lager[j]){
+                lager.push(r);
+              }
           }
         }
       }
+
     }
     if (lager.length > 0)
       return lager
@@ -114,6 +120,12 @@ class Karte {
   mousePressed() {
     var tile = this.kartengenerator.getTile(this.tiles, this.tileX, this.tileY)
     this.selectedTile = tile
+    if(this.selectedTile instanceof AbstractHaus){
+      if(this.selectedTile instanceof Farmer){
+        if(this.selectedTile.canLevelUp())
+          this.addHaus(new Buerger(this.selectedTile), this.selectedTile)
+      }
+    }
     /*
     if (tile instanceof AbstractFabrik) {
       if (this.selectedTile == null) {
@@ -146,7 +158,7 @@ class Karte {
 
   }
   addHaus(haus, tile) {
-    this.fabriken.push(haus)
+
 
     for (var i = 0; i < this.tiles.length; i++) {
       if (this.tiles[i] === tile) {
@@ -154,7 +166,14 @@ class Karte {
         console.log('tile entfernt')
 
       }
+    }
+      if(tile instanceof AbstractHaus)
+        this.fabriken.splice(this.fabriken.indexOf(tile), 1);
 
+      this.tiles.push(haus)
+      this.fabriken.push(haus)
+
+/*
       this.tiles[i].setHelligkeit(0)
 
       for (var j = 0; j < this.fabriken.length; j++) {
@@ -166,8 +185,11 @@ class Karte {
 
       }
     }
-    this.tiles.push(haus)
+*/
+
+
   }
+
 
   addFabrik(fabrik, tile) {
     this.fabriken.push(fabrik)

@@ -4,9 +4,17 @@ class Steinmetz extends AbstractFabrik{
   constructor(tile){
 
      super(tile.getX(), tile.getY(), tile.getID(),1, 2000, [], 100, 30, color(144,144,144));
-     super.setOutputRohstoff(new Stein());
+     this.setOutputRohstoff([{
+         resource: new Fisch().resource,
+         resourcenFaktor: 2
+     }]);
 
   }
 
 
 }
+
+Steinmetz.kosten = [{
+  resource: new Holz().resource,
+  resourcenFaktor: 10
+}]
