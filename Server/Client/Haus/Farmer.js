@@ -3,7 +3,10 @@ class Farmer extends AbstractHaus {
   //constructor(anzahlbewohner, nahrungsbedarf, rohstoffbedarf, farbe) {
 
   constructor(tile) {
-    super(tile.getX(), tile.getY(), tile.getID(), 10, [], [new Brett(), new Stein()], color(255, 185, 15))
+    super(Farmer.hausname, tile.getX(), tile.getY(), tile.getID(), 10, [],5000, [new Brett(), new Stein()], color(255, 185, 15))
+    let changes = {};
+    changes[new Holz().resource] = 1;
+    super.setNahrungsbedarf(changes)
 
   }
 }
@@ -11,3 +14,4 @@ class Farmer extends AbstractHaus {
 Farmer.kosten = {};
 Farmer.kosten[new Holz().resource] = 10;
 Farmer.kosten[new Stein().resource] = 10;
+Farmer.hausname = "farmer";

@@ -2,10 +2,10 @@ class Lager {
   constructor(karte) {
     this.karte = karte
     var self = this;
-    socket.on("lager",function(lager){
-      if(lager){
+    socket.on("lager", function(lager) {
+      if (lager) {
         self.lager = lager;
-      }else{
+      } else {
         self.lager = {};
         self.lager[new Holz().resource] = 1000;
         self.lager[new Stein().resource] = 1000;
@@ -15,7 +15,7 @@ class Lager {
     })
     socket.emit("getLager");
 
-    socket.on("lagerChange", function(lager){
+    socket.on("lagerChange", function(lager) {
       self.lager = lager;
     })
 
@@ -38,6 +38,15 @@ class Lager {
 
     if (lager) {
       socket.emit("add", lager);
+    }
+    for (let i = 0; i < this.karte.fabriken.length;i++) {
+      if (this.karte.fabriken[i] instanceof AbstractHaus) {
+        if (this.karte.fabriken[i].getLastHungerTick() + this.karte.fabriken[i].getHungerTick() < Date.now()) {
+          this.karte.fabriken[i].setLastHungerTick(Date.now())
+          this.remove(this.karte.fabriken[i].getNahrungsbedarf())
+          console.log(this.karte.fabriken[i].getNahrungsbedarf())
+        }
+      }
     }
   }
 

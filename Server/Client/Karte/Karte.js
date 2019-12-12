@@ -48,6 +48,19 @@ class Karte {
           }
       }
     })
+
+    socket.on("addHaus", function(haus) {
+      console.log(haus)
+      switch (haus.name) {
+        case Farmer.hausname:
+          {
+            let tile = self.kartengenerator.getTile(self.tiles, haus.id[0], haus.id[1])
+            self.addHaus(new Farmer(tile), tile, true);
+            break;
+          }
+      }
+    })
+
     socket.on("id", function(id) {
       self.id = id;
     })
@@ -201,7 +214,7 @@ class Karte {
     }
 
   }
-  addHaus(haus, tile) {
+  addHaus(haus, tile, preventEmit) {
     this.fabriken.push(haus)
 
     for (var i = 0; i < this.tiles.length; i++) {
@@ -223,6 +236,9 @@ class Karte {
       }*/
     }
     this.tiles.push(haus)
+    if (!preventEmit) {
+      socket.emit("addHaus", haus);
+    }
   }
 
   addFabrik(fabrik, tile, preventEmit) {

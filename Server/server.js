@@ -69,6 +69,17 @@ io.on('connection', function(socket) {
       }
     }
   });
+
+  socket.on("addHaus", function(fabrik) {
+    for (let i in sockets) {
+      let cur = sockets[i];
+      if (cur !== socket) {
+        cur.emit("addHaus", fabrik);
+      }
+    }
+  });
+
+
   socket.on("mouseHover", function(coordinates) {
     for (let id in sockets) {
       let cur = sockets[id];
