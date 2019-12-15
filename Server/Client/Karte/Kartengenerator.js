@@ -34,7 +34,7 @@ class Kartengenerator {
         for (var y = 0; y < 100; y++) {
           var xPos = x * tileSize;
           var yPos = y * tileSize;
-          var noiseVal = noise(xPos * 0.001, yPos * 0.001)
+          var noiseVal = noise(xPos * 0.0007, yPos * 0.0007)
 
           noiseVal = int(map(noiseVal, 0, 1, 0, 10))
 

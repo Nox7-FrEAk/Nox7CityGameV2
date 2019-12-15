@@ -55,9 +55,10 @@ class AbstractFabrik extends AbstractTile {
     ellipse(this.x,this.y,this.einzugsradius, this.einzugsradius)
     noStroke()
     fill(0)
-    textSize(10)
+    textSize(15)
     text('PR: ' + this.getProduktionsRate(), this.x, this.y)
     text('MA: ' + this.mitarbeiter + '/' + this.maximaleMitarbeiter, this.x, this.y+10)
+    text('Name:' + this.name, this.x, this.y+20)
 
   }
 

@@ -46,6 +46,30 @@ class Karte {
             self.addFabrik(new Steinmetz(tile), tile, true);
             break;
           }
+          case Baecker.fabrikname:
+            {
+              let tile = self.kartengenerator.getTile(self.tiles, fabrik.id[0], fabrik.id[1])
+              self.addFabrik(new Baecker(tile), tile, true);
+              break;
+            }
+          case Bauer.fabrikname:
+            {
+              let tile = self.kartengenerator.getTile(self.tiles, fabrik.id[0], fabrik.id[1])
+              self.addFabrik(new Bauer(tile), tile, true);
+              break;
+            }
+          case Fischer.fabrikname:
+            {
+              let tile = self.kartengenerator.getTile(self.tiles, fabrik.id[0], fabrik.id[1])
+              self.addFabrik(new Fischer(tile), tile, true);
+              break;
+            }
+          case Salzmine.fabrikname:
+            {
+              let tile = self.kartengenerator.getTile(self.tiles, fabrik.id[0], fabrik.id[1])
+              self.addFabrik(new Salzmine(tile), tile, true);
+              break;
+            }
       }
     })
 
@@ -149,6 +173,38 @@ class Karte {
       })
       if (key == '4')
         if (lager.remove(Farmer.kosten)) this.addHaus(new Farmer(tile), tile)
+      else simpleMenu.addText({
+        text: 'Nicht genug Rohestoffe!',
+        col: color(0, 0, 0)
+      })
+
+      if (key == '5')
+        if (lager.remove(Baecker.kosten)) this.addFabrik(new Baecker(tile), tile)
+      else simpleMenu.addText({
+        text: 'Nicht genug Rohestoffe!',
+        col: color(0, 0, 0)
+      })
+      if (key == '6')
+        if (lager.remove(Bauer.kosten)) this.addFabrik(new Bauer(tile), tile)
+      else simpleMenu.addText({
+        text: 'Nicht genug Rohestoffe!',
+        col: color(0, 0, 0)
+      })
+      if (key == '7')
+        if (lager.remove(Fischer.kosten)) this.addFabrik(new Fischer(tile), tile)
+      else simpleMenu.addText({
+        text: 'Nicht genug Rohestoffe!',
+        col: color(0, 0, 0)
+      })
+      if (key == '8')
+        if (lager.remove(Salzmine.kosten)) this.addFabrik(new Salzmine(tile), tile)
+      else simpleMenu.addText({
+        text: 'Nicht genug Rohestoffe!',
+        col: color(0, 0, 0)
+      })
+
+      if (key == '9')
+        if (lager.remove(Kohlewerk.kosten)) this.addFabrik(new Kohlewerk(tile), tile)
       else simpleMenu.addText({
         text: 'Nicht genug Rohestoffe!',
         col: color(0, 0, 0)
