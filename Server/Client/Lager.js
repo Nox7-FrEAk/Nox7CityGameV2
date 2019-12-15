@@ -7,8 +7,8 @@ class Lager {
         self.lager = lager;
       } else {
         self.lager = {};
-        self.lager[new Holz().resource] = 1000;
-        self.lager[new Stein().resource] = 1000;
+        self.lager[new Holz().resource] = 30;
+        self.lager[new Stein().resource] = 30;
         socket.emit('setLager', self.lager)
       }
 
@@ -39,12 +39,11 @@ class Lager {
     if (lager) {
       socket.emit("add", lager);
     }
-    for (let i = 0; i < this.karte.fabriken.length;i++) {
+    for (let i = 0; i < this.karte.fabriken.length; i++) {
       if (this.karte.fabriken[i] instanceof AbstractHaus) {
         if (this.karte.fabriken[i].getLastHungerTick() + this.karte.fabriken[i].getHungerTick() < Date.now()) {
           this.karte.fabriken[i].setLastHungerTick(Date.now())
           this.remove(this.karte.fabriken[i].getNahrungsbedarf())
-          console.log(this.karte.fabriken[i].getNahrungsbedarf())
         }
       }
     }
@@ -66,6 +65,7 @@ class Lager {
     if (this.canRemove(resource)) {
       socket.emit("remove", resource)
       for (var i in resource) {
+
         this.lager[i] -= resource[i];
       }
       return true

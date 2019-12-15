@@ -126,26 +126,33 @@ class Karte {
   keyPressed(key, lager) {
     var tile = this.kartengenerator.getTile(this.tiles, this.tileX, this.tileY)
 
-    if (key == 'W') this.translateY += tileSize / 2 * 4;
-    if (key == 'S') this.translateY -= tileSize / 2 * 4;
-    if (key == 'A') this.translateX += tileSize / 2 * 4;
-    if (key == 'D') this.translateX -= tileSize / 2 * 4;
-    //if(key == 'G') this.tiles = this.kartengenerator.generateKarte(this.tiles, -this.translateX*(1/this.zoom)/5);
-    if (key == 'Z' && this.zoom <= 2) this.zoom += 0.3;
-    if (key == 'U' && this.zoom >= 0.4) this.zoom -= 0.3;
     if (key == 'R') this.removeFabrik(tile)
 
     if (!(tile instanceof Wasser) && !(tile instanceof Lava)) {
       if (key == '1')
         if (lager.remove(Holzfaeller.kosten)) this.addFabrik(new Holzfaeller(tile), tile)
+      else simpleMenu.addText({
+        text: 'Nicht genug Rohestoffe!',
+        col: color(0, 0, 0)
+      })
       if (key == '2')
         if (lager.remove(Steinmetz.kosten)) this.addFabrik(new Steinmetz(tile), tile)
-
+      else simpleMenu.addText({
+        text: 'Nicht genug Rohestoffe!',
+        col: color(0, 0, 0)
+      })
       if (key == '3')
         if (lager.remove(Saegewerk.kosten)) this.addFabrik(new Saegewerk(tile), tile)
-
+      else simpleMenu.addText({
+        text: 'Nicht genug Rohestoffe!',
+        col: color(0, 0, 0)
+      })
       if (key == '4')
         if (lager.remove(Farmer.kosten)) this.addHaus(new Farmer(tile), tile)
+      else simpleMenu.addText({
+        text: 'Nicht genug Rohestoffe!',
+        col: color(0, 0, 0)
+      })
     }
 
     /*
@@ -300,8 +307,23 @@ class Karte {
     return this.translateY;
   }
 
+  setTranslateX(val) {
+    this.translateX = val
+  }
+
+  setTranslateY(val) {
+    this.translateY = val
+  }
+
   getZoom() {
     return this.zoom;
+  }
+
+  setZoom(zoom){
+    if(this.zoom+zoom <= 2 && this.zoom+zoom >= 0.4)
+    this.zoom += zoom
+
+
   }
 }
 //E/CK/#7_Wold-Generator
