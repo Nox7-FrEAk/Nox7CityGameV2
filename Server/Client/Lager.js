@@ -9,6 +9,8 @@ class Lager {
         self.lager = {};
         self.lager[new Holz().resource] = 30;
         self.lager[new Stein().resource] = 30;
+        self.lager[new Fisch().resource] = 30;
+
         socket.emit('setLager', self.lager)
       }
 
@@ -43,7 +45,7 @@ class Lager {
       if (this.karte.fabriken[i] instanceof AbstractHaus) {
         if (this.karte.fabriken[i].getLastHungerTick() + this.karte.fabriken[i].getHungerTick() < Date.now()) {
           this.karte.fabriken[i].setLastHungerTick(Date.now())
-          this.remove(this.karte.fabriken[i].getNahrungsbedarf())
+          this.remove(this.karte.fabriken[i].getNahrungsbedarf(), true)
         }
       }
     }
@@ -61,8 +63,8 @@ class Lager {
     return ok;
   }
 
-  remove(resource) {
-    if (this.canRemove(resource)) {
+  remove(resource, ignoreCan) {
+    if (this.canRemove(resource) || ignoreCan) {
       socket.emit("remove", resource)
       for (var i in resource) {
 
